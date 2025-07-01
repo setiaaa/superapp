@@ -16,7 +16,7 @@ const subApps = [
     { key: "Surat", label: "Surat", icon: "email" },
     { key: "Calender", label: "Kalender", icon: "calendar" },
     { key: "CutiApp", label: "Cuti", icon: "airplane" },
-    { key: "DigitalSignApp", label: "DigiSign", icon: "pen" },
+    { key: "DigiSign", label: "DigiSign", icon: "pen" },
     { key: "DriveApp", label: "Drive", icon: "cloud" },
     { key: "KepegawaianApp", label: "EPegawai", icon: "account-group" },
     { key: "SPPD", label: "SPPD", icon: "car-arrow-right" },
