@@ -8,17 +8,16 @@ const HomeBottomTabs = () => {
     const [activeTab, setActiveTab] = useState("home");
 
     const tabs = [
-        { key: "home", label: "Home", icon: "home" },
-        { key: "presensi", label: "Presensi", icon: "calendar-clock" },
-        { key: "account", label: "Akun", icon: "account" },
-        { key: "settings", label: "Pengaturan", icon: "cog" },
+        { key: "home", label: "Beranda", icon: "home" },
+        { key: "dashboard", label: "Dasbor", icon: "calendar-clock" },
+        { key: "account", label: "Akun", icon: "account" }
     ];
 
     const renderTabContent = () => {
         switch (activeTab) {
             case "home":
                 return <BerandaTab />;
-            case "presensi":
+            case "dashboard":
                 return <Text>⏱️ Cek Absensi Anda</Text>;
             case "account":
                 return <Text>👤 Profil Akun</Text>;

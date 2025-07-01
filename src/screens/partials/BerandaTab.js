@@ -15,17 +15,16 @@ import BottomSheetApp from "../../components/BottomSheetApp"; // Assuming you ha
 const subApps = [
     { key: "Surat", label: "Surat", icon: "email" },
     { key: "Calender", label: "Kalender", icon: "calendar" },
-    { key: "CutiApp", label: "Cuti", icon: "airplane" },
-    { key: "DigiSign", label: "DigiSign", icon: "pen" },
-    { key: "DriveApp", label: "Drive", icon: "cloud" },
-    { key: "KepegawaianApp", label: "EPegawai", icon: "account-group" },
+    { key: "Cuti", label: "Cuti", icon: "airplane" },
+    { key: "Prepandshar", label: "Prepare and Sharing", icon: "cloud" },
+    { key: "Event", label: "Event Management", icon: "calendar-multiple" },
     { key: "SPPD", label: "SPPD", icon: "car-arrow-right" },
-    { key: "More", label: "Lainnya", icon: "dots-grid" },
+    // { key: "More", label: "Lainnya", icon: "dots-grid" },
 ];
 
-const numColumns = 4;
+const numColumns = 3;
 const screenWidth = Dimensions.get("window").width - 20;
-const itemSpacing = 20;
+const itemSpacing = 24;
 const itemSize = (screenWidth - itemSpacing * (numColumns + 1)) / numColumns;
 
 const BerandaTab = () => {

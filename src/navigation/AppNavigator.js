@@ -2,15 +2,18 @@ import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthContext } from "../context/AuthContext";
 import AuthNavigator from "../auth/authNavigator";
-import MainStackNavigator from "./MainStackNavigator.js";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const AppNavigator = () => {
-    const { isLoggedIn } = useContext(AuthContext);
+    // const { isLoggedIn } = useContext(AuthContext);
 
     return (
         <NavigationContainer>
-            {isLoggedIn ? <MainStackNavigator /> : <AuthNavigator />}
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+                {/* {isLoggedIn ? <MainStackNavigator /> : <AuthNavigator />} */}
+                <AuthNavigator />
+            </SafeAreaView>
         </NavigationContainer>
     );
 };

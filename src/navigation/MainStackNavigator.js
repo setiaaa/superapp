@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SafeAreaView } from "react-native-safe-area-context";
 import HomeScreen from "../screens/HomeScreen";
 import CalenderNavigator from "../apps/calender/CalenderNavigator";
-import DigiSignNavigator from "../apps/digisign/DigiSignNavigator";
+import CutiNavigator from "../apps/cuti/CutiNavigator";
+import { useSelector } from "react-redux";
+import { getTokenValue } from "../services/session";
 
 const Stack = createNativeStackNavigator();
 
-const MainStackNavigator = () => (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="Home" component={HomeScreen}/>
-                <Stack.Screen name="Calender" component={CalenderNavigator} />
-                <Stack.Screen name="DigiSign" component={DigiSignNavigator} />
-                {/* <Stack.Screen name="SuratApp" component={SuratNavigator} />
+const MainStackNavigator = () => {
+    useEffect(() => {
+        getTokenValue().then((val) => {
+            // setToken(val);
+            console.log("Token value:", val);
+        });
+    }, []);
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Calender" component={CalenderNavigator} />
+            <Stack.Screen name="Cuti" component={CutiNavigator} />
+            {/* <Stack.Screen name="SuratApp" component={SuratNavigator} />
             <Stack.Screen name="AbsensiApp" component={AbsensiNavigator} /> */}
-            </Stack.Navigator>
-    </SafeAreaView>
-);
+        </Stack.Navigator>
+    );
+};
 
 export default MainStackNavigator;

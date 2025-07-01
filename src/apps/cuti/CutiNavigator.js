@@ -1,18 +1,18 @@
 import React from "react";
 import { createNativeStackNavigator, useNavigation  } from "@react-navigation/native-stack";
 import AppHeader from "../../components/Header";
-import DigiSignScreen from "./screens/DigiSignScreen";
+import CutiScreen from "./screens/CutiScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function DigiSignNavigator() {
+export default function CutiNavigator() {
     return (
         <Stack.Navigator
             screenOptions={{
-                header: () => <AppHeader title="Digital Sign" showBack={true} />,
+                header: () => <AppHeader title="Cuti" showBack={true} />,
             }}
         >
-            <Stack.Screen name="DigiSignScreen" component={DigiSignScreen} />
+            <Stack.Screen name="CutiScreen" component={CutiScreen} />
         </Stack.Navigator>
     );
 }
