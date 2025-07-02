@@ -119,11 +119,11 @@ export const getPilihApprovalPejabat = createAsyncThunk(
 
 export const getDokumenPersetujuan = createAsyncThunk(
     "cuti/getDokumenPersetujuan",
-    async ({ token, variant, page }) => {
+    async ({ token, status, page }) => {
         const respon = await axiosInstance.get(
-            `${Cuti}dokumen-persetujuanku/?status=${variant}&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=${page}`,
+            `${Cuti}dokumen-persetujuanku/?status=${status}&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=${page}`,
             {
-                headers: { Authorization: token },
+                headers: { Authorization: "507504de-fcd0-473e-ad10-9a24a5a929c7" },
             }
         );
         return respon?.data;

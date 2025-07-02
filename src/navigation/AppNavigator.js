@@ -6,7 +6,6 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const AppNavigator = () => {
-    // const { isLoggedIn } = useContext(AuthContext);
 
     return (
         <NavigationContainer>

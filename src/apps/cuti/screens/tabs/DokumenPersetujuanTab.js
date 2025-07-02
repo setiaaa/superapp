@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Search } from "../../../../components/Search";
 import CounterFilter from "../../../../components/CounterFilter";
@@ -9,12 +9,16 @@ import {
     postApproval,
 } from "../../api";
 import { getTokenValue } from "../../../../services/session";
+import { FlatList } from "react-native-gesture-handler";
+import CardList from "../../../../components/CardList";
 // import { setStatus } from "../../store";
 
 const DokumenPersetujuanTab = () => {
     const [token, setToken] = useState("");
     const [page, setPage] = useState(10);
     const dispatch = useDispatch();
+    const [listData, setListData] = useState(null);
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         getTokenValue().then((val) => {
@@ -23,7 +27,6 @@ const DokumenPersetujuanTab = () => {
     }, []);
 
     const [selected, setSelected] = useState("On Progress");
-    // console.log(selected);
 
     useEffect(() => {
         if (token !== "") {
@@ -37,9 +40,84 @@ const DokumenPersetujuanTab = () => {
         }
     }, [token, selected, page]);
 
+    const { persetujuan, loading, status, message } = useSelector(
+        (state) => state.cuti
+    );
+
+    const filter = (event) => {
+        setSearch(event);
+    };
+
+    useEffect(() => {
+        if (
+            persetujuan?.lists?.data !== null &&
+            persetujuan?.lists?.data?.length > 0
+        ) {
+            if (selected.key === "On Progress") {
+                setListData(
+                    persetujuan?.lists?.data.filter(
+                        (item) => item.status === selected
+                    )
+                );
+            } else if (selected.key === "Completed") {
+                setListData(
+                    persetujuan?.lists?.data.filter(
+                        (item) => item.status === selected
+                    )
+                );
+            } else if (selected.key === "Rejected") {
+                setListData(
+                    persetujuan?.lists?.data.filter(
+                        (item) => item.status === selected
+                    )
+                );
+            } else if (selected.key === "Returned") {
+                setListData(
+                    persetujuan?.lists?.data.filter(
+                        (item) => item.status === selected
+                    )
+                );
+            } else {
+                setListData(persetujuan?.lists?.data);
+            }
+        }
+    }, [selected, persetujuan]);
+
+    useEffect(() => {
+        if (search !== "") {
+            const data = listData.filter((item) => {
+                return item.jenis_cuti
+                    .toLowerCase()
+                    .includes(search.toLowerCase());
+            });
+            setListData(data);
+        } else {
+            setListData(persetujuan.lists?.data);
+        }
+    }, [search]);
+
+    useEffect(() => {
+        if (search !== "") {
+            const searchData = listData.filter((item) => {
+                return item.jenis_cuti
+                    .toLowerCase()
+                    .includes(search.toLowerCase());
+            });
+            setListData(searchData);
+        } else {
+            setListData(persetujuan?.lists?.data);
+        }
+    }, [persetujuan, search]);
+
+    const renderItem = ({ item }) => (
+        <CardList
+            item={item}
+        />
+    );
+
     const filters = [
         {
-            key: "on_progress",
+            key: "On Progress",
             label: "Butuh Persetujuan",
             value: persetujuan?.lists?.badge?.on_progress,
             color: "#1868AB",
@@ -64,17 +142,9 @@ const DokumenPersetujuanTab = () => {
         },
     ];
 
-    const { persetujuan, loading, status, message } = useSelector(
-        (state) => state.cuti
-    );
-    console.log(persetujuan?.lists);
     return (
         <View style={styles.container}>
-            <Search
-                placeholder="Cari"
-                iconColor="#ccc"
-                onSearch={(text) => console.log("Searching:", text)}
-            />
+            <Search placeholder="Cari" iconColor="#ccc" onSearch={filter} />
             <View
                 style={{
                     ...styles.filterContainer,
@@ -84,6 +154,14 @@ const DokumenPersetujuanTab = () => {
                     filters={filters}
                     selected={selected}
                     onSelect={setSelected}
+                />
+            </View>
+
+            <View style={styles.list}>
+                {console.log("listData: ", listData)}
+                <FlatList
+                    data={listData !== null ? listData : []}
+                    renderItem = {renderItem}
                 />
             </View>
         </View>
@@ -100,6 +178,15 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         padding: 2,
         borderRadius: 12,
+    },
+    list: {
+        height: "57%",
+        // paddingBottom: ,
+        // height: "100%",
+        // gap: 12,
+        // flex: 1,
+        // marginTop: 12,
+        // paddingHorizontal: 8,
     },
 });
 export default DokumenPersetujuanTab;
