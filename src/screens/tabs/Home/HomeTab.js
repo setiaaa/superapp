@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -10,28 +10,49 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import BottomSheetApp from "../../components/BottomSheetApp"; // Assuming you have a MoreAppsSheet component
+import BottomSheetApp from "../../../components/BottomSheetApp"; // Assuming you have a MoreAppsSheet component
+import { getProfileMe } from "../../../services/api";
+import { getTokenValue } from "../../../services/session";
+import { useDispatch, useSelector } from "react-redux";
 
 const subApps = [
     { key: "Surat", label: "Surat", icon: "email" },
     { key: "Calender", label: "Kalender", icon: "calendar" },
-    { key: "CutiApp", label: "Cuti", icon: "airplane" },
-    { key: "DigiSign", label: "DigiSign", icon: "pen" },
-    { key: "DriveApp", label: "Drive", icon: "cloud" },
-    { key: "KepegawaianApp", label: "EPegawai", icon: "account-group" },
+    { key: "Cuti", label: "Cuti", icon: "airplane" },
+    { key: "Prepandshar", label: "Prepare and Sharing", icon: "cloud" },
+    { key: "Event", label: "Event Management", icon: "calendar-multiple" },
     { key: "SPPD", label: "SPPD", icon: "car-arrow-right" },
-    { key: "More", label: "Lainnya", icon: "dots-grid" },
+    // { key: "More", label: "Lainnya", icon: "dots-grid" },
 ];
 
-const numColumns = 4;
+const numColumns = 3;
 const screenWidth = Dimensions.get("window").width - 20;
-const itemSpacing = 20;
+const itemSpacing = 24;
 const itemSize = (screenWidth - itemSpacing * (numColumns + 1)) / numColumns;
 
 const BerandaTab = () => {
     const navigation = useNavigation();
     const username = "Galang"; // ganti sesuai user stateF
     const nip = "123456789"; // ganti sesuai user state
+    const [token, setToken] = useState("");
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        getTokenValue().then((val) => {
+            setToken(val);
+            console.log("Token value:", val);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (token !== "") {
+            dispatch(getProfileMe({ token: token }));
+        }
+    }, [token]);
+
+    const { profile } = useSelector((state) => state.account);
+
+    console.log("Profile", profile, token);
 
     const sheetRef = useRef();
 
@@ -49,16 +70,13 @@ const BerandaTab = () => {
             style={[styles.item, { width: itemSize, height: itemSize }]}
             onPress={() => handlePressItem(item)}
         >
-            <MaterialCommunityIcons
-                    name={item.icon}
-                    size={28}
-                />
+            <MaterialCommunityIcons name={item.icon} size={28} />
             <Text style={styles.label}>{item.label}</Text>
         </TouchableOpacity>
     );
     return (
         <BottomSheetModalProvider>
-            <View style={{...styles.mainWrapper, zIndex: 9999}}>
+            <View style={{ ...styles.mainWrapper, zIndex: 9999 }}>
                 <TouchableOpacity style={styles.greetingContainer}>
                     <Text
                         style={{
@@ -115,7 +133,6 @@ const styles = StyleSheet.create({
     mainWrapper: {
         margin: 20,
         gap: 20,
-        
     },
     greetingContainer: {
         gap: 4,

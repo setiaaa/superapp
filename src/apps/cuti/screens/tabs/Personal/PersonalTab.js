@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Search } from "../../../components/Search";
-import BadgeFilter from "../../../components/BadgeFilter";
+import { Search } from "../../../../../components/Search";
+import BadgeFilter from "../../../../../components/BadgeFilter";
 
-const DigiSignScreen = () => {
+const PersonalTab = () => {
     const [selected, setSelected] = useState(null);
     const filters = [
         { key: "semua", label: "Semua" },
@@ -86,5 +86,4 @@ const styles = StyleSheet.create({
         marginTop: 16,
     },
 });
-
-export default DigiSignScreen;
+export default PersonalTab;
