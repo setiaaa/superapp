@@ -1,16 +1,16 @@
 import React, { useState, useEffect, use } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Search } from "../../../../components/Search";
-import CounterFilter from "../../../../components/CounterFilter";
+import { Search } from "../../../../../components/Search";
+import CounterFilter from "../../../../../components/CounterFilter";
 import { useDispatch, useSelector } from "react-redux";
 import {
     getDetailArsipCuti,
     getDokumenPersetujuan,
     postApproval,
-} from "../../api";
-import { getTokenValue } from "../../../../services/session";
+} from "../../../api";
+import { getTokenValue } from "../../../../../services/session";
 import { FlatList } from "react-native-gesture-handler";
-import CardList from "../../../../components/CardList";
+import CardList from "../../../components/CardList";
 // import { setStatus } from "../../store";
 
 const DokumenPersetujuanTab = () => {
@@ -19,6 +19,7 @@ const DokumenPersetujuanTab = () => {
     const dispatch = useDispatch();
     const [listData, setListData] = useState(null);
     const [search, setSearch] = useState("");
+    
 
     useEffect(() => {
         getTokenValue().then((val) => {
@@ -109,12 +110,8 @@ const DokumenPersetujuanTab = () => {
         }
     }, [persetujuan, search]);
 
-    const renderItem = ({ item }) => (
-        <CardList
-            item={item}
-        />
-    );
-
+    const renderItem = ({ item }) => <CardList item={item} token={token} />;
+    
     const filters = [
         {
             key: "On Progress",
@@ -156,12 +153,11 @@ const DokumenPersetujuanTab = () => {
                     onSelect={setSelected}
                 />
             </View>
-
+                {console.log(token)}
             <View style={styles.list}>
-                {console.log("listData: ", listData)}
                 <FlatList
                     data={listData !== null ? listData : []}
-                    renderItem = {renderItem}
+                    renderItem={renderItem}
                 />
             </View>
         </View>

@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import BottomSheetApp from "../../components/BottomSheetApp"; // Assuming you have a MoreAppsSheet component
+import BottomSheetApp from "../../../components/BottomSheetApp"; // Assuming you have a MoreAppsSheet component
 
 const subApps = [
     { key: "Surat", label: "Surat", icon: "email" },

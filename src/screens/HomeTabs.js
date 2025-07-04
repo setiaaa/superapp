@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import BottomTabNavigator from "../components/BottomTabNavigator";
-import HomeTab from "./tabs/HomeTab";
-import DashboardTab from "./tabs/DashboardTab";
-import ProfileTab from "./tabs/ProfileTab";
+import HomeTab from "./tabs/Home/HomeTab";
+import DashboardTab from "./tabs/Dashboard/DashboardTab";
+import ProfileTab from "./tabs/Profile/ProfileTab";
 
 const tabs = [
   { name: "Beranda", icon: "home", component: HomeTab },

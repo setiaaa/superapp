@@ -5,23 +5,37 @@ import { View, Text, Button, StyleSheet, Alert } from "react-native";
 import CustomTextInput from "../../components/CustomTextIinput";
 import CustomButton from "../../components/CustomButton";
 import { Login, getProfileMe } from "../../auth/hooks/useAuthForm";
-import { setLogout } from "../../store/LoginAuth";
+import { setLogout } from "../store/store";
 import { useNavigation } from "@react-navigation/native";
 import { getTokenValue } from "../../services/session";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const LoginScreen = () => {
     const [isSelected, setSelection] = useState(true);
     const dispatch = useDispatch();
     const navigation = useNavigation();
+    const loginAuth = useSelector((state) => state.login);
+
+    const [token, setToken] = useState("");
+    
+    useEffect(() => {
+        getTokenValue().then((val) => {
+            setToken(val);
+            console.log("Token value:", val);
+        });
+    }, []);
     useEffect(() => {
         // Check if the user is already logged in
         const checkLoginStatus = async () => {
             getTokenValue().then((val) => {
-                // setToken(val);
-                console.log("Token value:", val);
-                if (val !== null || val !== "") {
+                // console.log(val !== null , " ttt"); //token check
+                if (val !== null ) {
+                    console.log(val)
+                    console.log("login boskuh")
                     dispatch(getProfileMe(val));
                     navigation.replace("Main");
+                }else {
+                    console.log("No token found, user not logged in.");
                 }
             });
         };
@@ -35,14 +49,8 @@ const LoginScreen = () => {
         password: false,
     });
 
-    const loginAuth = useSelector((state) => state.login);
+    // const loginAuth = useSelector((state) => state.login);
 
-    useEffect(() => {
-        getTokenValue().then((val) => {
-            // setToken(val);
-            console.log("Token value:", val);
-        });
-    }, []);
 
     useEffect(() => {
         // dispatch(setCheckProdukHukum(false));

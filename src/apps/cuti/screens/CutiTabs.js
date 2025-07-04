@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import BottomTabNavigator from "../../../components/BottomTabNavigator";
 import { useNavigation } from "@react-navigation/native";
-import PersonalTab from "./tabs/PersonalTab";
-import DokumenPersetujuanTab from "./tabs/DokumenPersetujuanTab";
+import PersonalTab from "./tabs/Personal/PersonalTab";
+import DokumenPersetujuanTab from "./tabs/DokumenPersetujuan/DokumenPersetujuanTab";
 
 
 const tabs = [

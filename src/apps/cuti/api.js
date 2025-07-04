@@ -68,13 +68,19 @@ export const getArsipCuti = createAsyncThunk(
 export const getDetailArsipCuti = createAsyncThunk(
     "cuti/getDetailArsipCuti",
     async (data) => {
-        const respon = await axiosInstance.get(
-            `${Cuti}dokumen-detail/?id_dokumen=${data.id}`,
-            {
-                headers: { Authorization: data.token },
-            }
-        );
-        return respon?.data;
+        try {
+            console.log(data.id)
+            const respon = await axiosInstance.get(
+                `${Cuti}dokumen-detail/?id_dokumen=${data.id}`,
+                {
+                    headers: { Authorization: data.token },
+                }
+            );
+            return respon?.data;
+        } catch (error) {
+            console.error("Error fetching detail arsip cuti:", error);
+            throw error;
+        }
     }
 );
 
@@ -123,9 +129,12 @@ export const getDokumenPersetujuan = createAsyncThunk(
         const respon = await axiosInstance.get(
             `${Cuti}dokumen-persetujuanku/?status=${status}&tanggal_pembuatan_dimulai=&tanggal_pembuatan_sampai=&page=&limit=${page}`,
             {
-                headers: { Authorization: "507504de-fcd0-473e-ad10-9a24a5a929c7" },
+                headers: {
+                    Authorization: token,
+                },
             }
         );
+
         return respon?.data;
     }
 );
