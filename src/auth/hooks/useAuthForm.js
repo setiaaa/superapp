@@ -5,15 +5,15 @@ import { Config } from "../../services/config";
 const axiosInstance = axios.create();
 const BASE_URL = Config?.base_url;
 
-export const getProfileMe = createAsyncThunk(
-  "profile/getProfileMe",
-  async (token) => {
-    const respon = await axiosInstance.get(`${profile}me/`, {
-      headers: { Authorization: token },
-    });
-    return respon?.data.results;
-  }
-);
+// export const getProfileMe = createAsyncThunk(
+//   "profile/getProfileMe",
+//   async (token) => {
+//     const respon = await axiosInstance.get(`${profile}me/`, {
+//       headers: { Authorization: token },
+//     });
+//     return respon?.data.results;
+//   }
+// );
 
 export const Login = createAsyncThunk(
   "auth/Login",

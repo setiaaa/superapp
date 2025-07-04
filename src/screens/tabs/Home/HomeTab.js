@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -11,6 +11,9 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import BottomSheetApp from "../../../components/BottomSheetApp"; // Assuming you have a MoreAppsSheet component
+import { getProfileMe } from "../../../services/api";
+import { getTokenValue } from "../../../services/session";
+import { useDispatch, useSelector } from "react-redux";
 
 const subApps = [
     { key: "Surat", label: "Surat", icon: "email" },
@@ -31,6 +34,25 @@ const BerandaTab = () => {
     const navigation = useNavigation();
     const username = "Galang"; // ganti sesuai user stateF
     const nip = "123456789"; // ganti sesuai user state
+    const [token, setToken] = useState("");
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        getTokenValue().then((val) => {
+            setToken(val);
+            console.log("Token value:", val);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (token !== "") {
+            dispatch(getProfileMe({ token: token }));
+        }
+    }, [token]);
+
+    const { profile } = useSelector((state) => state.account);
+
+    console.log("Profile", profile, token);
 
     const sheetRef = useRef();
 
@@ -48,18 +70,14 @@ const BerandaTab = () => {
             style={[styles.item, { width: itemSize, height: itemSize }]}
             onPress={() => handlePressItem(item)}
         >
-            <MaterialCommunityIcons
-                    name={item.icon}
-                    size={28}
-                />
+            <MaterialCommunityIcons name={item.icon} size={28} />
             <Text style={styles.label}>{item.label}</Text>
         </TouchableOpacity>
     );
     return (
         <BottomSheetModalProvider>
-            <View style={{...styles.mainWrapper, zIndex: 9999}}>
-                <TouchableOpacity style={styles.greetingContainer}
-                    >
+            <View style={{ ...styles.mainWrapper, zIndex: 9999 }}>
+                <TouchableOpacity style={styles.greetingContainer}>
                     <Text
                         style={{
                             alignSelf: "flex-end",
@@ -115,7 +133,6 @@ const styles = StyleSheet.create({
     mainWrapper: {
         margin: 20,
         gap: 20,
-        
     },
     greetingContainer: {
         gap: 4,

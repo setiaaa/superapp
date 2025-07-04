@@ -4,11 +4,11 @@ import { View, Text, Button, StyleSheet, Alert } from "react-native";
 // import { AuthContext } from "../../context/AuthContext";
 import CustomTextInput from "../../components/CustomTextIinput";
 import CustomButton from "../../components/CustomButton";
-import { Login, getProfileMe } from "../../auth/hooks/useAuthForm";
+import { Login } from "../../auth/hooks/useAuthForm";
 import { setLogout } from "../store/store";
 import { useNavigation } from "@react-navigation/native";
 import { getTokenValue } from "../../services/session";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import { getProfileMe } from "../../services/api";
 
 const LoginScreen = () => {
     const [isSelected, setSelection] = useState(true);
@@ -32,7 +32,6 @@ const LoginScreen = () => {
                 if (val !== null ) {
                     console.log(val)
                     console.log("login boskuh")
-                    dispatch(getProfileMe(val));
                     navigation.replace("Main");
                 }else {
                     console.log("No token found, user not logged in.");
@@ -62,10 +61,11 @@ const LoginScreen = () => {
             dispatch(setLogout());
         } else if (
             loginAuth.error !== null &&
-            !loginAuth.error &&
-            isSelected == true
+            !loginAuth.error
+            //  &&
+            // isSelected == true
         ) {
-            dispatch(getProfileMe(loginAuth?.token?.token));
+            
             navigation.replace("Main");
         } else {
             setUserName("");
