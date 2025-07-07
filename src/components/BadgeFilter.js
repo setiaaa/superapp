@@ -12,7 +12,7 @@ const BadgeFilter = ({ filters, selectedFilter, onSelect }) => {
         <View style={{ marginVertical: 12 }}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {filters.map((filter) => {
-                    const isActive = selectedFilter === filter.key;
+                    const isActive = selectedFilter.key === filter.key;
                     return (
                         <TouchableOpacity
                             key={filter.key}
@@ -20,7 +20,7 @@ const BadgeFilter = ({ filters, selectedFilter, onSelect }) => {
                                 styles.badge,
                                 isActive && styles.activeBadge,
                             ]}
-                            onPress={() => onSelect(filter.key)}
+                            onPress={() => onSelect(filter)}
                         >
                             <Text
                                 style={[

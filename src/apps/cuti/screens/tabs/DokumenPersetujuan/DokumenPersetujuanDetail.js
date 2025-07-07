@@ -13,8 +13,6 @@ const DokumenPersetujuanDetail = ({ route }) => {
 
     const arsipDetail = arsip.detail;
 
-    console.log(arsip.detail.detail_dokumen?.dokumen?.id);
-
     const [token, setToken] = useState("");
 
     useEffect(() => {

@@ -7,7 +7,7 @@ import {
     getDetailArsipCuti,
     getDokumenPersetujuan,
     postApproval,
-} from "../../../api";
+} from "../../../service/cuti";
 import { getTokenValue } from "../../../../../services/session";
 import { FlatList } from "react-native-gesture-handler";
 import CardList from "../../../components/CardList";

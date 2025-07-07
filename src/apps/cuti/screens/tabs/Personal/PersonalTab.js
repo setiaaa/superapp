@@ -4,13 +4,14 @@ import { Search } from "../../../../../components/Search";
 import BadgeFilter from "../../../../../components/BadgeFilter";
 
 const PersonalTab = () => {
-    const [selected, setSelected] = useState(null);
     const filters = [
         { key: "semua", label: "Semua" },
         { key: "butuh_ttde", label: "Butuh TTDE" },
         { key: "selesai", label: "Selesai" },
         { key: "revisi", label: "Revisi" },
     ];
+    const [selected, setSelected] = useState(filters[0]); // default = "semua"
+
 
     return (
         <View style={styles.container}>

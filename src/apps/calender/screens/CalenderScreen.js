@@ -151,7 +151,6 @@ const CalenderScreen = () => {
                             }}
                             onSwipeEnd={(date) => {
                                 setDate(date);
-                                console.log("onSwipeEnd", date);
                             }}
                             events={events}
                             height={480}

@@ -17,7 +17,7 @@ import {
     postPengajuanCuti,
     postPengajuanCutiDraft,
     postTanggalCuti,
-} from "./api";
+} from "../service/cuti";
 import * as Sentry from "@sentry/react-native";
 import { createSlice } from '@reduxjs/toolkit';
 
