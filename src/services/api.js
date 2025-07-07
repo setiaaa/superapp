@@ -29,7 +29,6 @@ const axiosInstance = axios.create();
 export const getProfileMe = createAsyncThunk(
   "account/getProfileMe",
   async ({token}) => {
-    console.log(token, 'CWEK TOKEN');
       const respon = await axiosInstance.get(`${profile}me/`, {
         headers: { Authorization: token },
       });

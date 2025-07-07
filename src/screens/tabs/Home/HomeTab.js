@@ -19,7 +19,7 @@ const subApps = [
     { key: "Surat", label: "Surat", icon: "email" },
     { key: "Calender", label: "Kalender", icon: "calendar" },
     { key: "Cuti", label: "Cuti", icon: "airplane" },
-    { key: "Prepandshar", label: "Prepare and Sharing", icon: "cloud" },
+    { key: "PrepareAndSharing", label: "Prepare and Sharing", icon: "cloud" },
     { key: "Event", label: "Event Management", icon: "calendar-multiple" },
     { key: "SPPD", label: "SPPD", icon: "car-arrow-right" },
     // { key: "More", label: "Lainnya", icon: "dots-grid" },
@@ -52,13 +52,10 @@ const BerandaTab = () => {
 
     const { profile } = useSelector((state) => state.account);
 
-    console.log("Profile", profile, token);
-
     const sheetRef = useRef();
 
     const handlePressItem = (item) => {
         if (item.key === "More") {
-            console.log("Membuka BottomSheet");
             sheetRef.current?.open();
         } else {
             navigation.navigate(item.key);

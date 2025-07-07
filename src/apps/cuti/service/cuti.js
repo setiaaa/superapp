@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Config } from "../../services/config";
+import { Config } from "../../../services/config";
 
 const axiosInstance = axios.create();
 const BASE_URL = Config?.base_url;

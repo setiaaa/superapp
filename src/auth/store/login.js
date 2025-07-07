@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Login } from "../hooks/useAuthForm";
+import { Login } from "../service/login";
 import { setTokenValue } from "../../services/session";
 import * as Sentry from "@sentry/react-native";
 

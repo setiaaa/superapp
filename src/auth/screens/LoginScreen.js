@@ -4,8 +4,8 @@ import { View, Text, Button, StyleSheet, Alert } from "react-native";
 // import { AuthContext } from "../../context/AuthContext";
 import CustomTextInput from "../../components/CustomTextIinput";
 import CustomButton from "../../components/CustomButton";
-import { Login } from "../../auth/hooks/useAuthForm";
-import { setLogout } from "../store/store";
+import { Login } from "../service/login";
+import { setLogout } from "../store/login";
 import { useNavigation } from "@react-navigation/native";
 import { getTokenValue } from "../../services/session";
 import { getProfileMe } from "../../services/api";
@@ -28,10 +28,7 @@ const LoginScreen = () => {
         // Check if the user is already logged in
         const checkLoginStatus = async () => {
             getTokenValue().then((val) => {
-                // console.log(val !== null , " ttt"); //token check
                 if (val !== null ) {
-                    console.log(val)
-                    console.log("login boskuh")
                     navigation.replace("Main");
                 }else {
                     console.log("No token found, user not logged in.");

@@ -19,7 +19,6 @@ export const Login = createAsyncThunk(
   "auth/Login",
   async ({ username, password }, { rejectWithValue }) => {
     try {
-      console.log(Config.base_url_auth);
       const payload = {
         username: username,
         password: password,

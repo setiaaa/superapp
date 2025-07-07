@@ -5,6 +5,7 @@ import CalenderNavigator from "../apps/calender/CalenderNavigator";
 import CutiNavigator from "../apps/cuti/CutiNavigator";
 import { useSelector } from "react-redux";
 import { getTokenValue } from "../services/session";
+import PrepareAndSharingNavigator from "../apps/prepareandsharing/PrepareAndSharingNavigator";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ const MainStackNavigator = () => {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Calender" component={CalenderNavigator} />
             <Stack.Screen name="Cuti" component={CutiNavigator} />
+            <Stack.Screen name="PrepareAndSharing" component={PrepareAndSharingNavigator} />
             {/* <Stack.Screen name="SuratApp" component={SuratNavigator} />
             <Stack.Screen name="AbsensiApp" component={AbsensiNavigator} /> */}
         </Stack.Navigator>

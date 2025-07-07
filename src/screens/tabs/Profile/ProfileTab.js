@@ -12,7 +12,7 @@ import {
     setMenuLite,
     setMenuType,
 } from "../../../services/session";
-import { setLogout } from "../../../auth/store/store";
+import { setLogout } from "../../../auth/store/login";
 import {
     setNotifIos,
     setProfile,
@@ -41,18 +41,16 @@ const ProfileTab = () => {
 
     return (
         <View style={styles.container}>
-            <View style={
-                styles.cardProfile
-            }>
+            <View style={styles.cardProfile}>
                 <Image
-                    style={{ 
-                        width: 61
-                     }}
+                    style={{
+                        width: 61,
+                    }}
                     source={{ url: BASE_URL + profile.avatar_signed }}
                 />
                 {console.log(BASE_URL + profile.avatar_signed)}
-            <Text style={styles.name}>{profile.nama}</Text>
-            <Text style={styles.nip}>{profile.nama_jabatan}</Text>
+                <Text style={styles.name}>{profile.nama}</Text>
+                <Text style={styles.nip}>{profile.nama_jabatan}</Text>
             </View>
             <CustomButton
                 title="Logout"
