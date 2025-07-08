@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         color: "black",
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: "bold",
         width: "100%",
     },

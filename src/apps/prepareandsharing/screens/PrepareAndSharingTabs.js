@@ -1,7 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AppHeader from "../../../components/Header";
-import PrepareAndSharingScreen from "./PrepareAndSharingScreen";
 import BottomTabNavigator from "../../../components/BottomTabNavigator";
 import { View, Text, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";

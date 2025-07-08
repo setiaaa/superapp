@@ -65,7 +65,7 @@ const DokumenTab = () => {
     );
 
     // console.log("DokumenTab", dokumen.lists);
-    const renderItem = ({ item }) => <CardList item={item} token={token} />;
+    const renderItem = ({ item }) => <CardList item={item} token={token} tipe={type.value} />;
     return (
         <View style={{ ...styles.container }}>
             <View style={{ padding: 0 }}>
@@ -92,5 +92,8 @@ const styles = StyleSheet.create({
         padding: 20,
         gap: 12
     },
+    list: {
+        height: "89%"
+    }
 });
 export default DokumenTab;

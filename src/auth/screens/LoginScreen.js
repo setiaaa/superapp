@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, use } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View, Text, Button, StyleSheet, Alert } from "react-native";
 // import { AuthContext } from "../../context/AuthContext";
-import CustomTextInput from "../../components/CustomTextIinput";
+import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import { Login } from "../service/login";
 import { setLogout } from "../store/login";
@@ -17,7 +17,7 @@ const LoginScreen = () => {
     const loginAuth = useSelector((state) => state.login);
 
     const [token, setToken] = useState("");
-    
+
     useEffect(() => {
         getTokenValue().then((val) => {
             setToken(val);
@@ -28,9 +28,9 @@ const LoginScreen = () => {
         // Check if the user is already logged in
         const checkLoginStatus = async () => {
             getTokenValue().then((val) => {
-                if (val !== null ) {
+                if (val !== null) {
                     navigation.replace("Main");
-                }else {
+                } else {
                     console.log("No token found, user not logged in.");
                 }
             });
@@ -47,7 +47,6 @@ const LoginScreen = () => {
 
     // const loginAuth = useSelector((state) => state.login);
 
-
     useEffect(() => {
         // dispatch(setCheckProdukHukum(false));
         if (loginAuth.error !== null && loginAuth.error && isSelected == true) {
@@ -62,7 +61,6 @@ const LoginScreen = () => {
             //  &&
             // isSelected == true
         ) {
-            
             navigation.replace("Main");
         } else {
             setUserName("");
@@ -114,14 +112,25 @@ const LoginScreen = () => {
                     <CustomTextInput
                         label="Kata Sandi"
                         placeholder="••••••••"
-                        secureTextEntry
+                        endIcon={"eye"}
+                        password={true}
                         value={password}
                         onChangeText={setPassword}
                     />
                 </View>
                 <View>
+                    {/* <CustomButton
+                        title="Masuk"
+                        // color="#007bff"
+                        onPress={() => {
+                            setTimeout(() => {
+                                handleSubmit();
+                            }, 1000); // Simulate network delay
+                        }}
+                    /> */}
                     <CustomButton
-                        title="Login"
+                        title="Masuk"
+                        color={"#ff0000"}
                         onPress={() => {
                             setTimeout(() => {
                                 handleSubmit();

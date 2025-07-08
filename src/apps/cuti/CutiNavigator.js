@@ -9,9 +9,16 @@ const Stack = createNativeStackNavigator();
 export default function CutiNavigator() {
     return (
         <Stack.Navigator
-            screenOptions={{
-                header: () => <AppHeader title="Cuti" showBack={true} />,
-            }}
+            // screenOptions={{
+            //     header: () => <AppHeader title="Cuti" showBack={true} />,
+            // }}
+            screenOptions={({ route, navigation, options }) => ({
+                header: (props) => {
+                    const title = props.options?.headerTitle || "Cuti"; // 🧼 kosong jika tidak diset
+                    const showBack = props.options?.showBack ?? true;
+                    return <AppHeader title={title} showBack={showBack} />;
+                },
+            })}
         >
             <Stack.Screen name="CutiScreen" component={CutiScreen} />
             <Stack.Screen name="DokumenPersetujuanDetail" component={DokumenPersetujuanDetail} />

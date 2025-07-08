@@ -5,8 +5,15 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailDocument } from "../service/prepareandsharing";
 import moment from "moment/min/moment-with-locales";
+import {
+  setDokumentlists,
+  setEdit,
+  setLoadMore,
+  setRating,
+} from "../store/prepareandsharing";
+import DokumenDetail from "../screens/tabs/Dokumen/DokumenDetail";
 
-const CardList = ({ item, token }) => {
+const CardList = ({ item, token, tipe }) => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const getDetail = (id) => {
@@ -20,16 +27,28 @@ const CardList = ({ item, token }) => {
             style={styles.card}
             onPress={
                 (onPress = () => {
-                    getDetail(item.id);
-                    navigation.navigate("DokumenDetail", {
-                        id: "view",
-                        item: item,
-                        token: token,
-                    });
+                    if (item.published === true) {
+                        if (tipe === "revision") {
+                            dispatch(setEdit("Edit"));
+                            getDetail(item.id);
+                            navigation.navigate("DokumenDetail");
+                            console.log("item.id", item.id);
+                            // dispatch(setRating(true));
+                        } else {
+                            getDetail(item.id);
+                            navigation.navigate("MainDetailRepo");
+                        }
+                    } else {
+                        getDetail(item.id);
+                        navigation.navigate("BerbagiDokumen", {
+                            data: item,
+                            type: "draft",
+                        });
+                    }
                 })
             }
         >
-            <Text style={styles.description}>{item?.id}</Text>
+            {/* <Text style={styles.description}>{item?.id}</Text> */}
             <View style={styles.cardHeader}>
                 <Text style={styles.createdDate}>{item.title}</Text>
             </View>

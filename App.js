@@ -5,6 +5,7 @@ import AppNavigator from "./src/navigation/AppNavigator";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { store } from "./src/store/store";
 import { Provider } from "react-redux";
+import { KeyboardAvoidingView } from "react-native";
 
 export default function App() {
     return (
@@ -12,8 +13,11 @@ export default function App() {
             <SafeAreaProvider>
                 <Provider store={store}>
                     {/* <AuthProvider> */}
+                    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+
                         <AppNavigator />
                     {/* </AuthProvider> */}
+                    </KeyboardAvoidingView>
                 </Provider>
             </SafeAreaProvider>
         </GestureHandlerRootView>

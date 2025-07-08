@@ -3,8 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { View, Text, StyleSheet } from "react-native";
 import { setIsBypass, setNotifIos } from "../../../../../store/Account";
 import { getTokenValue } from "../../../../../services/session";
+import { useNavigation } from "@react-navigation/native";
+
 
 const DokumenPersetujuanDetail = ({ route }) => {
+    const navigation = useNavigation();
+    useEffect(() => {
+        navigation.setOptions({
+            headerTitle: "Detail Cuti", // ✔️ judul tampil dari sini
+            showBack: true, // opsional
+        });
+    }, [navigation]);
+
     const approval = route.params;
     const { profile, IsBypass } = useSelector((state) => state.account);
     const { arsip, message, loading, status } = useSelector(
@@ -26,8 +36,12 @@ const DokumenPersetujuanDetail = ({ route }) => {
             <View style={styles.card}>
                 <Text style={styles.cardTitle}>Jenis Cuti</Text>
                 <Text>{arsipDetail?.detail_dokumen?.jenis_cuti?.nama}</Text>
-                <Text>{arsipDetail?.detail_dokumen?.jenis_cuti?.tipe_hari}</Text>  
-                <Text>{arsipDetail?.detail_dokumen?.dokumen?.jenis_dokumen}</Text>  
+                <Text>
+                    {arsipDetail?.detail_dokumen?.jenis_cuti?.tipe_hari}
+                </Text>
+                <Text>
+                    {arsipDetail?.detail_dokumen?.dokumen?.jenis_dokumen}
+                </Text>
             </View>
         </View>
     );

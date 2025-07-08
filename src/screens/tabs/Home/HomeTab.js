@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { BottomSheet, BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import BottomSheetApp from "../../../components/BottomSheetApp"; // Assuming you have a MoreAppsSheet component
 import { getProfileMe } from "../../../services/api";
 import { getTokenValue } from "../../../services/session";

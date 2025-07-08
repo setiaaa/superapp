@@ -44,8 +44,8 @@ const CalenderScreen = () => {
         setDate(today);
     };
     return (
-        <ScrollView 
-            style={{ 
+        <ScrollView
+            style={{
                 gap: 2,
             }}
         >
@@ -104,7 +104,7 @@ const CalenderScreen = () => {
                                 Hari Ini
                             </Text>
                         </TouchableOpacity>{" "} */}
-                            // today
+                            {/* Today */}
                         </View>
                         <View
                             style={{
@@ -119,17 +119,17 @@ const CalenderScreen = () => {
                                     name="chevron-back-outline"
                                     size={24}
                                     color="black"
-                                ></Ionicons>
-                            </TouchableOpacity>{" "}
-                            //
+                                />
+                            </TouchableOpacity>
+                            {/* Prev */}
                             <TouchableOpacity onPress={() => _onNextDate()}>
                                 <Ionicons
                                     name="chevron-forward-outline"
                                     size={24}
                                     color="black"
                                 ></Ionicons>
-                            </TouchableOpacity>{" "}
-                            // next
+                            </TouchableOpacity>
+                            {/* Next */}
                         </View>
                     </View>
                     <View
@@ -179,7 +179,7 @@ const CalenderScreen = () => {
                     >
                         Catatan
                     </Text>
-                    { events && events.length > 0 ? (
+                    {events && events.length > 0 ? (
                         events.map((event, index) => (
                             <View
                                 key={index}
@@ -199,8 +199,8 @@ const CalenderScreen = () => {
                                     {event.title}
                                 </Text>
                                 <Text style={{ color: "#666" }}>
-                                    {dayjs(event.start).format("DD MMMM YYYY")} -{" "}
-                                    {dayjs(event.end).format("DD MMMM YYYY")}
+                                    {dayjs(event.start).format("DD MMMM YYYY")}{" "}
+                                    - {dayjs(event.end).format("DD MMMM YYYY")}
                                 </Text>
                             </View>
                         ))
@@ -211,7 +211,7 @@ const CalenderScreen = () => {
                     )}
                 </View>
             </View>
-        </ScrollView >
+        </ScrollView>
     );
 };
 
