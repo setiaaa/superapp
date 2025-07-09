@@ -24,6 +24,7 @@ import {
     putBerbagiDokumen,
 } from "../../../service/prepareandsharing";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import * as DocumentPicker from "expo-document-picker";
 
 const BerbagiDokumen = ({ route }) => {
     const { addressbook } = useSelector((state) => state.addressBookKKP);
@@ -247,6 +248,7 @@ const BerbagiDokumen = ({ route }) => {
                                 <Text style={{ color: "red" }}>*</Text>
                             </Text>
                             <Pressable onPress={pickDocument}>
+                                {console.log('Diklik')}
                                 <View
                                     style={{
                                         gap: 8,

@@ -10,14 +10,16 @@ import PrepareAndSharingNavigator from "../apps/prepareandsharing/PrepareAndShar
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = () => {
+    const { device } = useSelector((state) => state.apps);
     useEffect(() => {
         getTokenValue().then((val) => {
             // setToken(val);
             console.log("Token value:", val);
         });
     }, []);
+    console.log("Device type:", device);
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator screenOptions={{ headerShown: false, orientation: "auto" }}>
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Calender" component={CalenderNavigator} />
             <Stack.Screen name="Cuti" component={CutiNavigator} />

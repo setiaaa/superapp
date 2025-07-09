@@ -6,6 +6,7 @@ import {
     FlatList,
     Dimensions,
     TouchableOpacity,
+    useWindowDimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -22,20 +23,14 @@ const subApps = [
     { key: "PrepareAndSharing", label: "Prepare and Sharing", icon: "cloud" },
     { key: "Event", label: "Event Management", icon: "calendar-multiple" },
     { key: "SPPD", label: "SPPD", icon: "car-arrow-right" },
-    // { key: "More", label: "Lainnya", icon: "dots-grid" },
 ];
-
-const numColumns = 3;
-const screenWidth = Dimensions.get("window").width - 20;
-const itemSpacing = 24;
-const itemSize = (screenWidth - itemSpacing * (numColumns + 1)) / numColumns;
+const itemSize = 100; // ✅ Tetap, tidak tergantung lebar layar
+const spacing = 16;
 
 const BerandaTab = () => {
-    const navigation = useNavigation();
-    const username = "Galang"; // ganti sesuai user stateF
-    const nip = "123456789"; // ganti sesuai user state
     const [token, setToken] = useState("");
     const dispatch = useDispatch();
+    const navigation = useNavigation();
 
     useEffect(() => {
         getTokenValue().then((val) => {
@@ -51,80 +46,34 @@ const BerandaTab = () => {
     }, [token]);
 
     const { profile } = useSelector((state) => state.account);
-
-    const sheetRef = useRef();
-
-    const handlePressItem = (item) => {
-        if (item.key === "More") {
-            sheetRef.current?.open();
-        } else {
-            navigation.navigate(item.key);
-        }
-    };
-
     const renderItem = ({ item }) => (
-        <TouchableOpacity
-            style={[styles.item, { width: itemSize, height: itemSize }]}
-            onPress={() => handlePressItem(item)}
-        >
-            <MaterialCommunityIcons name={item.icon} size={28} />
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate(item.key)}>
+            <MaterialCommunityIcons name={item.icon} size={26} color="#333" />
             <Text style={styles.label}>{item.label}</Text>
         </TouchableOpacity>
     );
+
     return (
-        <BottomSheetModalProvider>
-            <View style={{ ...styles.mainWrapper, zIndex: 9999 }}>
-                <TouchableOpacity style={styles.greetingContainer}>
-                    <Text
-                        style={{
-                            alignSelf: "flex-end",
-                            fontSize: 16,
-                            fontWeight: "bold",
-                        }}
-                    >
-                        {username}
-                    </Text>
-                    <Text
-                        style={{
-                            alignSelf: "flex-end",
-                            fontSize: 12,
-                            fontWeight: "medium",
-                        }}
-                    >
-                        {nip}
-                    </Text>
-                </TouchableOpacity>
-                <View
-                    style={{
-                        backgroundColor: "#fff",
-                        paddingBottom: 0,
-                        borderRadius: 16,
-                    }}
-                >
-                    <FlatList
-                        data={
-                            subApps.length > 0
-                                ? subApps
-                                : [
-                                      {
-                                          key: "empty",
-                                          label: "Tidak ada aplikasi",
-                                          icon: "alert-circle",
-                                      },
-                                  ]
-                        }
-                        renderItem={renderItem}
-                        numColumns={numColumns}
-                        keyExtractor={(item) => item.key}
-                        contentContainerStyle={styles.container}
-                        columnWrapperStyle={styles.row}
-                    />
-                    <BottomSheetApp ref={sheetRef} navigation={navigation} />
-                </View>
+        <View style={styles.mainWrapper}>
+            <View style={styles.greetingContainer}>
+                <Text style={styles.username}>Galang</Text>
+                <Text style={styles.nip}>123456789</Text>
             </View>
-        </BottomSheetModalProvider>
+            <FlatList
+                data={subApps}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.key}
+                numColumns={Math.floor(
+                    Dimensions.get("window").width / (itemSize + spacing)
+                )} // ✅ jumlah kolom fleksibel
+                contentContainerStyle={styles.container}
+                columnWrapperStyle={styles.row}
+            />
+        </View>
     );
 };
+
+export default BerandaTab;
 
 const styles = StyleSheet.create({
     mainWrapper: {
@@ -140,27 +89,41 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         alignSelf: "flex-end",
     },
+    username: {
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    nip: {
+        fontSize: 12,
+        fontWeight: "500",
+    },
     container: {
-        padding: itemSpacing,
-        paddingBottom: 0,
+        // paddingHorizontal: spacing,
+        
+        alignItems: "center",
+        backgroundColor: "white",
     },
     row: {
         justifyContent: "space-between",
-        marginBottom: itemSpacing,
+        gap: spacing,
+
     },
     item: {
-        borderRadius: 16,
+        width: itemSize,
+        height: itemSize,
+        borderRadius: 12,
         alignItems: "center",
         justifyContent: "center",
-        borderColor: "#ccc",
         borderWidth: 1,
+        borderColor: "#ddd",
+        backgroundColor: "#fff",
+        // marginBottom: spacing,
+        marginVertical: spacing / 2,
     },
     label: {
-        marginTop: 8,
-        fontSize: 10,
+        marginTop: 6,
+        fontSize: 12,
         textAlign: "center",
         color: "#333",
     },
 });
-
-export default BerandaTab;

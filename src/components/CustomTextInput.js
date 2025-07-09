@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     inputField: {
+        borderRadius: 12,
         height: 40,
         paddingLeft: 14,
         paddingVertical: 10,
