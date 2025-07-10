@@ -10,7 +10,6 @@ const axiosInstance = axios.create();
 export const getDocument = createAsyncThunk(
   "prepareandsharing/getDocument",
   async ({ token, page, type, tipe }) => {
-    console.log(type, '+',tipe)
     if (tipe === "revision" || tipe === "review") {
       const respon = await axiosInstance.get(
         `${repository}my-documents/?limit=${page}&published=${type}&public=false&tipe=${tipe}`,
@@ -18,10 +17,8 @@ export const getDocument = createAsyncThunk(
           headers: { Authorization: token },
         }
       );
-      console.log(`${repository}my-documents/?limit=${page}&published=${type}&public=false&tipe=${tipe}`);
       return respon?.data.result;
     } else {
-      console.log(repository+`my-documents/?limit=${page}&published=${type}&public=false`)
       const respon = await axiosInstance.get(
         `${repository}my-documents/?limit=${page}&published=${type}&public=false`,
         {

@@ -7,18 +7,21 @@ import {
     StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as necessary
 
 const CounterFilter = ({ filters = [], selected, onSelect }) => {
+    const { theme } = useTheme();
     const renderItem = ({ item }) => {
         const isSelected = selected === item.key;
-        
 
         return (
             <TouchableOpacity
                 style={[
                     styles.counterBox,
-                    isSelected && styles.selectedBox,
-                    { borderColor: isSelected ? item.color : "#ccc" },
+                    {
+                        backgroundColor: theme.card, // 🔹 latar kartu
+                        borderColor: isSelected ? item.color : theme.border, // 🔸 border dinamis
+                    },
                 ]}
                 onPress={() => onSelect(item.key)}
             >
@@ -26,26 +29,35 @@ const CounterFilter = ({ filters = [], selected, onSelect }) => {
                     <View
                         style={{
                             ...styles.iconWrapper,
-                            backgroundColor: item.color,
+                            backgroundColor: item.color, // Tetap pakai item.color
                         }}
                     >
                         <Ionicons
                             name="calendar-outline"
                             size={16}
-                            // size={device === "tablet" ? 27 : 18}
-                            color="white"
+                            color="#fff"
                         />
                     </View>
                     <Text
                         style={[
                             styles.count,
-                            isSelected && styles.selectedText,
+                            { color: isSelected ? item.color : theme.text }, // 🔸 angka kontras
                         ]}
                     >
                         {item.value}
                     </Text>
                 </View>
-                <Text style={[styles.label, isSelected && styles.selectedText]}>
+
+                <Text
+                    style={[
+                        styles.label,
+                        {
+                            color: isSelected
+                                ? item.color
+                                : theme.textSecondary, // 🔸 teks label
+                        },
+                    ]}
+                >
                     {item.label}
                 </Text>
             </TouchableOpacity>

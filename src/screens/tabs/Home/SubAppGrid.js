@@ -18,8 +18,6 @@ const numColumns = 3;
 const screenWidth = Dimensions.get('window').width-24;
 const itemSpacing = 32;
 const itemSize = (screenWidth - itemSpacing * (numColumns + 1)) / numColumns;
-console.log(screenWidth)
-console.log(Dimensions.get('window').height)
 const SubAppGrid = () => {
   const navigation = useNavigation();
 

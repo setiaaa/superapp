@@ -31,7 +31,6 @@ export const setTokenValue = async (value) => {
 };
 
 export const removeTokenValue = async (value) => {
-  console.log("remove token", value);
   try {
     await AsyncStorage.removeItem("token");
   } catch (e) {}
@@ -39,7 +38,6 @@ export const removeTokenValue = async (value) => {
 
 export const setPushNotif = async (value) => {
   try {
-    console.log("storage", value);
     await AsyncStorage.setItem("notif", JSON.stringify(value));
   } catch (e) {}
 };
@@ -53,8 +51,6 @@ export const getPushNotif = async () => {
 
 export const removePushNotif = async (value) => {
   try {
-    console.log("hapus");
-    console.log(value);
     await AsyncStorage.removeItem("notif");
   } catch (e) {}
 };

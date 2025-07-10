@@ -8,6 +8,7 @@ import {
     useColorScheme,
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as necessary
 const CustomTextInput = ({
     label,
     placeholder,
@@ -19,8 +20,7 @@ const CustomTextInput = ({
     endIcon = null,
     password = false,
 }) => {
-    const scheme = useColorScheme();
-const textColor = scheme === 'dark' ? '#fff' : '#000';
+    const { theme } = useTheme();
     const [isSecure, setIsSecure] = useState(secureTextEntry || password);
     const renderIcon = () => {
         if (!endIcon) return null;
@@ -32,7 +32,7 @@ const textColor = scheme === 'dark' ? '#fff' : '#000';
                     <MaterialCommunityIcons
                         name={isSecure ? "eye-off" : "eye"}
                         size={20}
-                        color="#aaa"
+                        color={theme.placeholder}
                     />
                 </TouchableOpacity>
             );
@@ -48,14 +48,24 @@ const textColor = scheme === 'dark' ? '#fff' : '#000';
                     flexDirection: "row",
                 }}
             >
-                {label && <Text style={styles.label}>{label}</Text>}
-                {mandatory && <Text style={{ color: "red" }}>*</Text>}
+                {label && (
+                    <Text style={[styles.label, { color: theme.text }]}>
+                        {label}
+                    </Text>
+                )}
+                {mandatory && <Text style={{ color: theme.error }}>*</Text>}
             </View>
-            <View style={{ ...styles.input }}>
+            <View style={[styles.input, { borderColor: theme.border }]}>
                 <TextInput
-                    style={[styles.inputField, { color: textColor }]}
+                    style={[
+                        styles.inputField,
+                        {
+                            color: theme.text,
+                            backgroundColor: theme.inputBackground,
+                        },
+                    ]}
                     placeholder={placeholder}
-                    placeholderTextColor="#aaa"
+                    placeholderTextColor={theme.placeholder}
                     value={value}
                     onChangeText={onChangeText}
                     secureTextEntry={isSecure}
@@ -78,13 +88,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: "600",
         marginBottom: 6,
-        color: "#333",
     },
     input: {
-        
         borderWidth: 1,
-        borderColor: "#ddd",
-        borderRadius: 10,
+        borderRadius: 12,
         paddingRight: 14,
         borderRadius: 12,
         alignItems: "center",
@@ -92,7 +99,7 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     inputField: {
-        borderRadius: 12,
+        borderRadius: 14,
         height: 40,
         paddingLeft: 14,
         paddingVertical: 10,

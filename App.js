@@ -1,12 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import AppNavigator from "./src/navigation/AppNavigator";
 // import { AuthProvider } from "./src/context/AuthContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { store } from "./src/store/store";
 import { Provider } from "react-redux";
-import { KeyboardAvoidingView, useWindowDimensions } from "react-native";
+import {
+    KeyboardAvoidingView,
+    Platform,
+    useWindowDimensions,
+} from "react-native";
 import { DeviceType, getDeviceTypeAsync } from "expo-device";
+import { ThemeProvider, useTheme } from "./src/theme/ThemeContext";
+import { StatusBar } from "expo-status-bar";
+
+// ✅ Komponen ini berada di dalam ThemeProvider
+const AppContent = () => {
+    const { theme, isDark } = useTheme();
+
+    return (
+        <>
+            <StatusBar
+                style={isDark ? "light" : "dark"}
+                translucent={true}
+                animated={true}
+                backgroundColor={theme.background}
+            />
+
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === "ios" ? "padding" : undefined}
+            >
+                <SafeAreaProvider style={{ backgroundColor: theme.surface }}>
+                    <AppNavigator />
+                </SafeAreaProvider >
+            </KeyboardAvoidingView>
+        </>
+    );
+};
 
 export default function App() {
     const { width, height } = useWindowDimensions();
@@ -25,25 +56,18 @@ export default function App() {
         };
         getDeviceTypeAsync()
             .then((device) => {
-                dispatch(setDevice(deviceTypeMap[device]));
+                // dispatch(setDevice(deviceTypeMap[device])); // aktifkan kalau dispatch tersedia
             })
             .catch((error) => console.log(error));
     }, []);
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <SafeAreaProvider>
-                <Provider store={store}>
-                    {/* <AuthProvider> */}
-                    <KeyboardAvoidingView
-                        style={{ flex: 1 }}
-                        behavior="padding"
-                    >
-                        <AppNavigator />
-                        {/* </AuthProvider> */}
-                    </KeyboardAvoidingView>
-                </Provider>
-            </SafeAreaProvider>
+            <Provider store={store}>
+                <ThemeProvider>
+                    <AppContent />
+                </ThemeProvider>
+            </Provider>
         </GestureHandlerRootView>
     );
 }

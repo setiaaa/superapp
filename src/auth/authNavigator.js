@@ -6,12 +6,6 @@ import Main from "../navigation/MainStackNavigator"; // Assuming Main is your ma
 const Stack = createNativeStackNavigator();
 
 const AuthNavigator = () => {
-    // useEffect(() => {
-    //     getTokenValue().then((val) => {
-    //         // setToken(val);
-    //         console.log("Check Login Statys:", val);
-    //     });
-    // }, []);
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Login" component={LoginScreen} />

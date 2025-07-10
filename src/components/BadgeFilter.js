@@ -6,8 +6,11 @@ import {
     StyleSheet,
     View,
 } from "react-native";
+import { useTheme } from "../theme/ThemeContext"; // pastikan path benar
 
 const BadgeFilter = ({ filters, selectedFilter, onSelect }) => {
+    const { theme } = useTheme();
+
     return (
         <View style={{ marginVertical: 12 }}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -18,14 +21,25 @@ const BadgeFilter = ({ filters, selectedFilter, onSelect }) => {
                             key={filter.key}
                             style={[
                                 styles.badge,
-                                isActive && styles.activeBadge,
+                                {
+                                    backgroundColor: isActive
+                                        ? theme.primary
+                                        : theme.card,
+                                    borderColor: isActive
+                                        ? theme.primary
+                                        : theme.border,
+                                },
                             ]}
                             onPress={() => onSelect(filter)}
                         >
                             <Text
                                 style={[
                                     styles.label,
-                                    isActive && styles.activeLabel,
+                                    {
+                                        color: isActive
+                                            ? "#fff"
+                                            : theme.text,
+                                    },
                                 ]}
                             >
                                 {filter.label}
@@ -45,18 +59,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 14,
         paddingVertical: 6,
         borderRadius: 20,
-        backgroundColor: "#fff",
         marginRight: 10,
-    },
-    activeBadge: {
-        backgroundColor: "#6200ee",
+        borderWidth: 1,
     },
     label: {
         fontSize: 13,
-        color: "#333",
-    },
-    activeLabel: {
-        color: "#fff",
-        fontWeight: "600",
     },
 });

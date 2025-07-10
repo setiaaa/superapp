@@ -21,7 +21,6 @@ const LoginScreen = () => {
     useEffect(() => {
         getTokenValue().then((val) => {
             setToken(val);
-            console.log("Token value:", val);
         });
     }, []);
     useEffect(() => {
@@ -30,8 +29,6 @@ const LoginScreen = () => {
             getTokenValue().then((val) => {
                 if (val !== null) {
                     navigation.replace("Main");
-                } else {
-                    console.log("No token found, user not logged in.");
                 }
             });
         };

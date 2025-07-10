@@ -8,7 +8,6 @@ import BerbagiDokumen from "./screens/tabs/Dokumen/BerbagiDokumen";
 const Stack = createNativeStackNavigator();
 
 export default function PrepareAndSharingNavigator() {
-    console.log("PrepareAndSharingNavigator loaded");
     return (
         // <Stack.Navigator
         //     screenOptions={{

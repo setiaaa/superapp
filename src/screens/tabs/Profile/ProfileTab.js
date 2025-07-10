@@ -23,8 +23,10 @@ import { setProfile as setProfileKores } from "../../../store/profile"; // Adjus
 import { useNavigation } from "@react-navigation/native";
 import { config } from "../../../services/api"; // Adjust the import path as necessary
 import { Config } from "../../../services/config"; // Adjust the import path as necessary
+import { useTheme } from "../../../theme/ThemeContext";
 
 const ProfileTab = () => {
+    const { theme } = useTheme(); // Assuming you have a useTheme hook for theming
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const [token, setToken] = useState(""); // Initialize token state
@@ -37,23 +39,29 @@ const ProfileTab = () => {
             setToken(val);
         });
     }, []);
-    console.log("Profile", profile);
 
     return (
-        <View style={styles.container}>
-            <View style={styles.cardProfile}>
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
+            <View
+                style={[styles.cardProfile, { backgroundColor: theme.surface }]}
+            >
                 <Image
                     style={{
                         width: 61,
                     }}
                     source={{ url: BASE_URL + profile.avatar_signed }}
                 />
-                {console.log(BASE_URL + profile.avatar_signed)}
-                <Text style={styles.name}>{profile.nama}</Text>
-                <Text style={styles.nip}>{profile.nama_jabatan}</Text>
+                <Text style={[styles.name, { color: theme.text }]}>
+                    {profile.nama}
+                </Text>
+                <Text style={[styles.nip, { color: theme.textSecondary }]}>
+                    {profile.nama_jabatan}
+                </Text>
             </View>
             <CustomButton
                 title="Logout"
+                icon="logout"
+                color={theme.error} // Tomato color for logout button
                 onPress={() => {
                     dispatch(setLogout());
                     removeTokenValue();
@@ -70,17 +78,14 @@ const ProfileTab = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
-        backgroundColor: "#f9f9f9",
+        padding: 20,
     },
     cardProfile: {
         alignItems: "flex-start",
         justifyContent: "center",
         marginBottom: 16,
-        // backgroundColor: "#e0e0e0",
         borderRadius: 12,
         padding: 16,
-        backgroundColor: "#fff",
     },
     name: {
         fontSize: 14,
@@ -89,8 +94,6 @@ const styles = StyleSheet.create({
     },
     nip: {
         fontSize: 12,
-        color: "#666",
-        // backgroundColor
     },
 });
 

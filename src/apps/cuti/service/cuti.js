@@ -69,7 +69,6 @@ export const getDetailArsipCuti = createAsyncThunk(
     "cuti/getDetailArsipCuti",
     async (data) => {
         try {
-            console.log(data.id)
             const respon = await axiosInstance.get(
                 `${Cuti}dokumen-detail/?id_dokumen=${data.id}`,
                 {

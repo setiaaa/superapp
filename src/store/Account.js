@@ -23,10 +23,8 @@ const AccountSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getProfileMe.pending, (state) => {
-        // console.log("⏳ getProfileMe pending");
       })
       .addCase(getProfileMe.fulfilled, (state, action) => {
-        // console.log("✅ getProfileMe fulfilled", action.payload);
         let roles_access = [];
         if (action.payload.roles_coofis) {
           roles_access = action.payload.roles_coofis.map((item) => item.state);
@@ -39,7 +37,6 @@ const AccountSlice = createSlice({
         state.isBypass = action.payload.is_bypass;
       })
       .addCase(getProfileMe.rejected, (state, action) => {
-        // console.log("❌ getProfileMe rejected", action.error);
         state.handleError = true;
         Sentry.captureException(action.error);
       });

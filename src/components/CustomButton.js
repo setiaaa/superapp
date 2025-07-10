@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as necessary
 
 const CustomButton = ({
     title,
@@ -10,15 +11,22 @@ const CustomButton = ({
     startIcon = null,
     endIcon = null,
 }) => {
-    const backgroundColor = disabled ? "#ccc" : color ?? "#fff";
-    const textColor = color == null ? "#000" : "#fff";
-    const borderColor = color ?? "#333";
+    const { theme } = useTheme();
+
+    const backgroundColor = color ? color : theme.surface;
+
+    const textColor = color == null ? theme.textSecondary : theme.text; // agar kontras di background berwarna
+
+    const borderColor = color ?? theme.border;
     return (
         <TouchableOpacity
             style={[
                 styles.button,
                 disabled && styles.disabled,
-                { backgroundColor, borderColor },
+                {
+                    backgroundColor: backgroundColor,
+                    borderColor: borderColor,
+                },
             ]}
             onPress={onPress}
             activeOpacity={0.8}
@@ -27,7 +35,7 @@ const CustomButton = ({
             {startIcon && (
                 <MaterialCommunityIcons
                     name={startIcon}
-                    color={textColor}
+                    color={disabled ? theme.text : textColor}
                     size={18}
                 />
             )}

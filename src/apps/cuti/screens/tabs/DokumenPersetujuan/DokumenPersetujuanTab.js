@@ -12,8 +12,10 @@ import { getTokenValue } from "../../../../../services/session";
 import { FlatList } from "react-native-gesture-handler";
 import CardList from "../../../components/CardList";
 // import { setStatus } from "../../store";
+import { useTheme } from "../../../../../theme/ThemeContext"; // Adjust the import path as necessary
 
 const DokumenPersetujuanTab = () => {
+    const { theme } = useTheme();
     const [token, setToken] = useState("");
     const [page, setPage] = useState(10);
     const dispatch = useDispatch();
@@ -117,35 +119,39 @@ const DokumenPersetujuanTab = () => {
             key: "On Progress",
             label: "Butuh Persetujuan",
             value: persetujuan?.lists?.badge?.on_progress,
-            color: "#1868AB",
+            color: theme.info,
         },
         {
             key: "Completed",
             label: "Disetujui Anda",
             value: persetujuan?.lists?.badge?.completed,
-            color: "#11C15B",
+            color: theme.success,
         },
         {
             key: "Rejected",
             label: "Tidak Disetujui Anda",
             value: persetujuan?.lists?.badge?.rejected,
-            color: "#C34647",
+            color: theme.error,
         },
         {
             key: "Returned",
             label: "Dikembalikan Anda",
             value: persetujuan?.lists?.badge?.returned,
-            color: "#F6AD1D",
+            color: theme.warning,
         },
     ];
 
     return (
-        <View style={styles.container}>
+        <View style={[
+                styles.container,
+                { backgroundColor: theme.background }, // ✅ tema background
+            ]}>
             <Search placeholder="Cari" iconColor="#ccc" onSearch={filter} />
             <View
-                style={{
-                    ...styles.filterContainer,
-                }}
+               style={[
+                    styles.filterContainer,
+                    { backgroundColor: theme.surface }, // ✅ tema surface
+                ]}
             >
                 <CounterFilter
                     filters={filters}
@@ -153,7 +159,6 @@ const DokumenPersetujuanTab = () => {
                     onSelect={setSelected}
                 />
             </View>
-                {console.log(token)}
             <View style={styles.list}>
                 <FlatList
                     data={listData !== null ? listData : []}
@@ -166,23 +171,15 @@ const DokumenPersetujuanTab = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#f0f0f0",
         padding: 20,
         gap: 12,
     },
     filterContainer: {
-        backgroundColor: "white",
         padding: 2,
         borderRadius: 12,
     },
     list: {
         height: "57%",
-        // paddingBottom: ,
-        // height: "100%",
-        // gap: 12,
-        // flex: 1,
-        // marginTop: 12,
-        // paddingHorizontal: 8,
     },
 });
 export default DokumenPersetujuanTab;

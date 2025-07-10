@@ -38,6 +38,4 @@ const PrepareAndSharingTabs = () => {
     return <BottomTabNavigator tabs={tabs} />;
 };
 
-const styles = StyleSheet.create({});
-
 export default PrepareAndSharingTabs;

@@ -13,11 +13,9 @@ const MainStackNavigator = () => {
     const { device } = useSelector((state) => state.apps);
     useEffect(() => {
         getTokenValue().then((val) => {
-            // setToken(val);
-            console.log("Token value:", val);
+            setToken(val);
         });
     }, []);
-    console.log("Device type:", device);
     return (
         <Stack.Navigator screenOptions={{ headerShown: false, orientation: "auto" }}>
             <Stack.Screen name="Home" component={HomeScreen} />

@@ -16,7 +16,7 @@ const DatePickerModal = ({ isVisible, onConfirm, onCancel }) => {
             confirmTextIOS="Pilih"
             cancelTextIOS="Batal"
              display={Platform.OS === "ios" ? "inline" : "default"} // ✅ fix tampilan iOS
-            themeVariant="light" // ✅ untuk iOS, gunakan tema terang
+            // themeVariant="light" // ✅ untuk iOS, gunakan tema terang
         />
     );
 };

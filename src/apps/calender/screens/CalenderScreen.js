@@ -4,6 +4,8 @@ import { Calendar, modeToNum } from "react-native-big-calendar";
 import dayjs from "dayjs";
 import "dayjs/locale/id";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useTheme } from "../../../theme/ThemeContext"; // pastikan path sesuai
+
 
 const events = [
     {
@@ -19,6 +21,8 @@ const events = [
 ];
 
 const CalenderScreen = () => {
+    const { theme } = useTheme();
+
     // useEffect
     dayjs.locale("id");
     const today = new Date();
@@ -47,11 +51,12 @@ const CalenderScreen = () => {
         <ScrollView
             style={{
                 gap: 2,
+                backgroundColor: theme.background,
             }}
         >
             <View
                 style={{
-                    backgroundColor: "white",
+                    backgroundColor: theme.card,
                     margin: 16,
                     borderRadius: 16,
                 }}
@@ -59,7 +64,6 @@ const CalenderScreen = () => {
                 <View>
                     <View
                         style={{
-                            // backgroundColor: "#f0f0f0",
                             padding: 16,
                             alignItems: "center",
                             flexDirection: "row",
@@ -78,7 +82,7 @@ const CalenderScreen = () => {
                                 style={{
                                     fontSize: 20,
                                     fontWeight: "bold",
-                                    color: "black",
+                                    color: theme.text,
                                 }}
                             >
                                 {dayjs(date).format("MMMM")}
@@ -118,7 +122,7 @@ const CalenderScreen = () => {
                                 <Ionicons
                                     name="chevron-back-outline"
                                     size={24}
-                                    color="black"
+                                    color={theme.icon}
                                 />
                             </TouchableOpacity>
                             {/* Prev */}
@@ -126,7 +130,7 @@ const CalenderScreen = () => {
                                 <Ionicons
                                     name="chevron-forward-outline"
                                     size={24}
-                                    color="black"
+                                    color={theme.icon}
                                 ></Ionicons>
                             </TouchableOpacity>
                             {/* Next */}
@@ -144,9 +148,9 @@ const CalenderScreen = () => {
                         <Calendar
                             style={{
                                 flex: 1,
-                                borderRadius: 8,
+                                borderRadius: 12,
                                 overflow: "hidden",
-                                borderColor: "#ccc",
+                                borderColor: "white",
                                 borderWidth: 1,
                             }}
                             onSwipeEnd={(date) => {
@@ -164,7 +168,7 @@ const CalenderScreen = () => {
                 <View
                     style={{
                         padding: 16,
-                        backgroundColor: "#fff",
+                        backgroundColor: theme.card,
                         borderRadius: 16,
                         margin: 16,
                     }}
@@ -173,7 +177,7 @@ const CalenderScreen = () => {
                         style={{
                             fontSize: 18,
                             fontWeight: "bold",
-                            color: "black",
+                            color: theme.text,
                             marginBottom: 8,
                         }}
                     >
@@ -186,26 +190,26 @@ const CalenderScreen = () => {
                                 style={{
                                     padding: 12,
                                     borderBottomWidth: 1,
-                                    borderBottomColor: "#eee",
+                                    borderBottomColor: theme.border
                                 }}
                             >
                                 <Text
                                     style={{
                                         fontSize: 16,
                                         fontWeight: "bold",
-                                        color: "#333",
+                                        color: theme.text,
                                     }}
                                 >
                                     {event.title}
                                 </Text>
-                                <Text style={{ color: "#666" }}>
+                                <Text style={{ color: theme.textSecondary }}>
                                     {dayjs(event.start).format("DD MMMM YYYY")}{" "}
                                     - {dayjs(event.end).format("DD MMMM YYYY")}
                                 </Text>
                             </View>
                         ))
                     ) : (
-                        <Text style={{ color: "#666" }}>
+                        <Text style={{ color: theme.textSecondary }}>
                             Tidak ada catatan untuk hari ini.
                         </Text>
                     )}

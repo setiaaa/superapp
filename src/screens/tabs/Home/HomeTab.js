@@ -15,6 +15,7 @@ import BottomSheetApp from "../../../components/BottomSheetApp"; // Assuming you
 import { getProfileMe } from "../../../services/api";
 import { getTokenValue } from "../../../services/session";
 import { useDispatch, useSelector } from "react-redux";
+import { useTheme } from "../../../theme/ThemeContext";
 
 const subApps = [
     { key: "Surat", label: "Surat", icon: "email" },
@@ -28,6 +29,7 @@ const itemSize = 100; // ✅ Tetap, tidak tergantung lebar layar
 const spacing = 16;
 
 const BerandaTab = () => {
+    const { theme } = useTheme();
     const [token, setToken] = useState("");
     const dispatch = useDispatch();
     const navigation = useNavigation();
@@ -35,7 +37,6 @@ const BerandaTab = () => {
     useEffect(() => {
         getTokenValue().then((val) => {
             setToken(val);
-            console.log("Token value:", val);
         });
     }, []);
 
@@ -47,17 +48,43 @@ const BerandaTab = () => {
 
     const { profile } = useSelector((state) => state.account);
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate(item.key)}>
-            <MaterialCommunityIcons name={item.icon} size={26} color="#333" />
-            <Text style={styles.label}>{item.label}</Text>
+        <TouchableOpacity
+            style={[
+                styles.item,
+                { backgroundColor: theme.surface, borderColor: theme.border },
+            ]}
+            onPress={() => navigation.navigate(item.key)}
+        >
+            <MaterialCommunityIcons
+                name={item.icon}
+                size={26}
+                color={theme.icon}
+            />
+            <Text style={[styles.label, { color: theme.text }]}>
+                {item.label}
+            </Text>
         </TouchableOpacity>
     );
+    // saya ingin cek state tema saat ini
 
     return (
-        <View style={styles.mainWrapper}>
-            <View style={styles.greetingContainer}>
-                <Text style={styles.username}>Galang</Text>
-                <Text style={styles.nip}>123456789</Text>
+        <View style={[styles.surface, { backgroundColor: theme.background }]}>
+            <View
+                style={[
+                    styles.greetingContainer,
+                    { backgroundColor: theme.surface },
+                ]}
+            >
+                <Text style={[styles.username, { color: theme.text }]}>
+                    {profile?.nama || "Selamat Datang"}
+                </Text>
+                <Text
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                    style={[styles.position, { color: theme.text }]}
+                >
+                    {profile?.nama_jabatan || "-"}
+                </Text>
             </View>
             <FlatList
                 data={subApps}
@@ -65,8 +92,11 @@ const BerandaTab = () => {
                 keyExtractor={(item) => item.key}
                 numColumns={Math.floor(
                     Dimensions.get("window").width / (itemSize + spacing)
-                )} // ✅ jumlah kolom fleksibel
-                contentContainerStyle={styles.container}
+                )}
+                contentContainerStyle={[
+                    styles.container,
+                    { backgroundColor: theme.surface },
+                ]}
                 columnWrapperStyle={styles.row}
             />
         </View>
@@ -76,8 +106,9 @@ const BerandaTab = () => {
 export default BerandaTab;
 
 const styles = StyleSheet.create({
-    mainWrapper: {
-        margin: 20,
+    surface: {
+        flex: 1,
+        padding: 20,
         gap: 20,
     },
     greetingContainer: {
@@ -86,27 +117,28 @@ const styles = StyleSheet.create({
         paddingTop: 8,
         paddingBottom: 10,
         paddingHorizontal: 16,
-        backgroundColor: "#fff",
         alignSelf: "flex-end",
+        maxHeight: 56,
+        // height: 56,
     },
     username: {
-        fontSize: 16,
-        fontWeight: "bold",
-    },
-    nip: {
         fontSize: 12,
+        fontWeight: "bold",
+        textAlign: "right",
+    },
+    position: {
+        fontSize: 8,
         fontWeight: "500",
+        textAlign: "right",
+        maxWidth: "50%",
     },
     container: {
-        // paddingHorizontal: spacing,
-        
+        borderRadius: 12,
         alignItems: "center",
-        backgroundColor: "white",
     },
     row: {
         justifyContent: "space-between",
         gap: spacing,
-
     },
     item: {
         width: itemSize,
@@ -115,8 +147,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderWidth: 1,
-        borderColor: "#ddd",
-        backgroundColor: "#fff",
         // marginBottom: spacing,
         marginVertical: spacing / 2,
     },

@@ -4,9 +4,10 @@ import { View, Text, StyleSheet } from "react-native";
 import { setIsBypass, setNotifIos } from "../../../../../store/Account";
 import { getTokenValue } from "../../../../../services/session";
 import { useNavigation } from "@react-navigation/native";
-
+import { useTheme } from "../../../../../theme/ThemeContext"; // Adjust the import path as necessary
 
 const DokumenPersetujuanDetail = ({ route }) => {
+    const { theme } = useTheme();
     const navigation = useNavigation();
     useEffect(() => {
         navigation.setOptions({
@@ -32,14 +33,18 @@ const DokumenPersetujuanDetail = ({ route }) => {
     }, []);
 
     return (
-        <View style={styles.container}>
-            <View style={styles.card}>
-                <Text style={styles.cardTitle}>Jenis Cuti</Text>
-                <Text>{arsipDetail?.detail_dokumen?.jenis_cuti?.nama}</Text>
-                <Text>
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
+            <View style={[styles.card, { backgroundColor: theme.card }]}>
+                <Text style={[styles.cardTitle, { color: theme.text }]}>
+                    Jenis Cuti
+                </Text>
+                <Text style={{ color: theme.text }}>
+                    {arsipDetail?.detail_dokumen?.jenis_cuti?.nama}
+                </Text>
+                <Text style={{ color: theme.text }}>
                     {arsipDetail?.detail_dokumen?.jenis_cuti?.tipe_hari}
                 </Text>
-                <Text>
+                <Text style={{ color: theme.text }}>
                     {arsipDetail?.detail_dokumen?.dokumen?.jenis_dokumen}
                 </Text>
             </View>
