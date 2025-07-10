@@ -8,42 +8,48 @@ import { Provider } from "react-redux";
 import { KeyboardAvoidingView, useWindowDimensions } from "react-native";
 import { DeviceType, getDeviceTypeAsync } from "expo-device";
 
+import SplashScreen from "./src/components/SplashScreen";
+
 export default function App() {
-    const { width, height } = useWindowDimensions();
-    const [deviceName, setDeviceName] = useState(null);
-    const [deviceId, setDeviceId] = useState(null);
-    const [deviceUUID, set_deviceUUID] = useState(null);
-    const [deviceOS, setDeviceOS] = useState(null);
+  const [isAppReady, setIsAppReady] = useState(false);
 
-    useEffect(() => {
-        const deviceTypeMap = {
-            [DeviceType.UNKNOWN]: "unknown",
-            [DeviceType.PHONE]: "phone",
-            [DeviceType.TABLET]: "tablet",
-            [DeviceType.TV]: "tv",
-            [DeviceType.DESKTOP]: "desktop",
-        };
-        getDeviceTypeAsync()
-            .then((device) => {
-                dispatch(setDevice(deviceTypeMap[device]));
-            })
-            .catch((error) => console.log(error));
-    }, []);
+  const { width, height } = useWindowDimensions();
+  const [deviceName, setDeviceName] = useState(null);
+  const [deviceId, setDeviceId] = useState(null);
+  const [deviceUUID, set_deviceUUID] = useState(null);
+  const [deviceOS, setDeviceOS] = useState(null);
 
-    return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-            <SafeAreaProvider>
-                <Provider store={store}>
-                    {/* <AuthProvider> */}
-                    <KeyboardAvoidingView
-                        style={{ flex: 1 }}
-                        behavior="padding"
-                    >
-                        <AppNavigator />
-                        {/* </AuthProvider> */}
-                    </KeyboardAvoidingView>
-                </Provider>
-            </SafeAreaProvider>
-        </GestureHandlerRootView>
-    );
+  useEffect(() => {
+    const deviceTypeMap = {
+      [DeviceType.UNKNOWN]: "unknown",
+      [DeviceType.PHONE]: "phone",
+      [DeviceType.TABLET]: "tablet",
+      [DeviceType.TV]: "tv",
+      [DeviceType.DESKTOP]: "desktop",
+    };
+    getDeviceTypeAsync()
+      .then((device) => {
+        dispatch(setDevice(deviceTypeMap[device]));
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  if (!isAppReady) {
+    // onFinish akan memanggil setIsAppReady(true) setelah 3 detik
+    return <SplashScreen onFinish={() => setIsAppReady(true)} />;
+  }
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          {/* <AuthProvider> */}
+          <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+            <AppNavigator />
+            {/* </AuthProvider> */}
+          </KeyboardAvoidingView>
+        </Provider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  );
 }
