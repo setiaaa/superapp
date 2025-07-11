@@ -15,6 +15,29 @@ import BottomSheetApp from "../../../components/BottomSheetApp"; // Assuming you
 import { getProfileMe } from "../../../services/api";
 import { getTokenValue } from "../../../services/session";
 import { useDispatch, useSelector } from "react-redux";
+// komponen Carousel
+import Carousel from "../../../components/Carousel";
+// Dummy data
+const dummyData = [
+  {
+    title: "test",
+    description: "test",
+    image:
+      "https://www.creativefabrica.com/wp-content/uploads/2021/06/28/Image-photo-icon-Graphics-13989898-1-1-580x386.jpg",
+  },
+  {
+    title: "test",
+    description: "test",
+    image:
+      "https://www.creativefabrica.com/wp-content/uploads/2021/06/28/Image-photo-icon-Graphics-13989898-1-1-580x386.jpg",
+  },
+  {
+    title: "test",
+    description: "test",
+    image:
+      "https://www.creativefabrica.com/wp-content/uploads/2021/06/28/Image-photo-icon-Graphics-13989898-1-1-580x386.jpg",
+  },
+];
 
 const subApps = [
   { key: "Surat", label: "Surat", icon: "email" },
@@ -31,6 +54,10 @@ const BerandaTab = () => {
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  // Carousel
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [news, setNews] = useState(dummyData);
 
   useEffect(() => {
     getTokenValue().then((val) => {
@@ -62,6 +89,16 @@ const BerandaTab = () => {
         <Text style={styles.username}>Galang</Text>
         <Text style={styles.nip}>123456789</Text>
       </View>
+      <View style={styles.carouselWrapper}>
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : error ? (
+          <Text style={styles.error}>{error}</Text>
+        ) : (
+          <Carousel newsData={news} />
+        )}
+      </View>
+
       <FlatList
         data={subApps}
         renderItem={renderItem}
@@ -83,6 +120,10 @@ const styles = StyleSheet.create({
     margin: 20,
     gap: 20,
   },
+  carouselWrapper: {
+    height: 250, // Tinggi untuk carousel, sesuaikan sesuai kebutuhan
+    width: "100%",
+  },
   greetingContainer: {
     gap: 4,
     borderRadius: 12,
@@ -102,7 +143,6 @@ const styles = StyleSheet.create({
   },
   container: {
     // paddingHorizontal: spacing,
-
     alignItems: "center",
     backgroundColor: "white",
   },

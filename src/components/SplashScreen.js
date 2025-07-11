@@ -5,8 +5,6 @@ import PropTypes from "prop-types";
 
 // komponen SplashScreen
 const SplashScreen = ({ onFinish }) => {
-  // const [isSplashVisible, setIsSplashVisible] = useState(true);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       // setIsSplashVisible(false);
@@ -14,8 +12,6 @@ const SplashScreen = ({ onFinish }) => {
     }, 3000);
     return () => clearTimeout(timer);
   }, [onFinish]);
-
-  // if (!isSplashVisible) return null;
 
   return (
     <View style={style.container}>
@@ -26,10 +22,6 @@ const SplashScreen = ({ onFinish }) => {
         autoPlay
         loop={false}
         style={style.animation}
-        // onAnimationFinish={() => {
-        //   setIsSplashVisible(false);
-        //   if (onFinish) onFinish();
-        // }}
         onAnimationFinish={onFinish}
       />
     </View>

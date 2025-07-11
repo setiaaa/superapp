@@ -6,18 +6,17 @@ import { useNavigation } from "@react-navigation/native";
 import PersonalTab from "./tabs/Personal/PersonalTab";
 import DokumenPersetujuanTab from "./tabs/DokumenPersetujuan/DokumenPersetujuanTab";
 
-
 const tabs = [
-    { name: "Personal", icon: "home", component: PersonalTab },
-    {
-        name: "Dokumen Persetujuan",
-        icon: "briefcase",
-        component: DokumenPersetujuanTab,
-    },
-    // { name: "Dokumen Personal", icon: "file", component: DokumenPersetujuanTab },
+  { name: "Personal", icon: "home", component: PersonalTab },
+  {
+    name: "Dokumen Persetujuan",
+    icon: "briefcase",
+    component: DokumenPersetujuanTab,
+  },
+  // { name: "Dokumen Personal", icon: "file", component: DokumenPersetujuanTab },
 ];
 const CutiTabs = () => {
-    return <BottomTabNavigator tabs={tabs} />;
+  return <BottomTabNavigator tabs={tabs} />;
 };
 
 const styles = StyleSheet.create({});
