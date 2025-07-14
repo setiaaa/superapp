@@ -14,8 +14,8 @@ import { DeviceType, getDeviceTypeAsync } from "expo-device";
 import { ThemeProvider, useTheme } from "./src/theme/ThemeContext";
 import { StatusBar } from "expo-status-bar";
 import { PaperProvider } from "react-native-paper";
+import SplashScreen from "./src/components/SplashScreen";
 
-// ✅ Komponen ini berada di dalam ThemeProvider
 const AppContent = () => {
     const { theme, isDark, toggleTheme, themeMode } = useTheme();
 
@@ -37,6 +37,7 @@ const AppContent = () => {
 };
 
 export default function App() {
+    const [isAppReady, setIsAppReady] = useState(false);
     const { width, height } = useWindowDimensions();
     const [deviceName, setDeviceName] = useState(null);
     const [deviceId, setDeviceId] = useState(null);
@@ -53,11 +54,14 @@ export default function App() {
         };
         getDeviceTypeAsync()
             .then((device) => {
-                // dispatch(setDevice(deviceTypeMap[device])); // aktifkan kalau dispatch tersedia
+                // dispatch(setDevice(deviceTypeMap[device]));
             })
             .catch((error) => console.log(error));
     }, []);
-
+    if (!isAppReady) {
+        // onFinish akan memanggil setIsAppReady(true) setelah 3 detik
+        return <SplashScreen onFinish={() => setIsAppReady(true)} />;
+    }
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <Provider store={store}>

@@ -4,12 +4,12 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as necessary
 
 const CustomButton = ({
-    title,
-    onPress,
-    color = null,
-    disabled = false,
-    startIcon = null,
-    endIcon = null,
+  title,
+  onPress,
+  color = null,
+  disabled = false,
+  startIcon = null,
+  endIcon = null,
 }) => {
     const { theme, isDark, toggleTheme, themeMode  } = useTheme();
 
@@ -61,23 +61,23 @@ const CustomButton = ({
 export default CustomButton;
 
 const styles = StyleSheet.create({
-    button: {
-        backgroundColor: "#6200ee",
-        paddingVertical: 14,
-        borderRadius: 10,
-        alignItems: "center",
-        borderWidth: 1,
-        flexDirection: "row",
-        justifyContent: "center",
-        gap: 8,
-        height: 48,
-    },
-    disabled: {
-        backgroundColor: "#ccc",
-    },
-    buttonText: {
-        // color: "#fff",
-        fontWeight: "600",
-        fontSize: 16,
-    },
+  button: {
+    backgroundColor: "#6200ee",
+    paddingVertical: 14,
+    borderRadius: 10,
+    alignItems: "center",
+    borderWidth: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 8,
+    height: 48,
+  },
+  disabled: {
+    backgroundColor: "#ccc",
+  },
+  buttonText: {
+    // color: "#fff",
+    fontWeight: "600",
+    fontSize: 16,
+  },
 });

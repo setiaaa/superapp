@@ -8,7 +8,7 @@ import {
     useColorScheme,
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as necessary
+import { useTheme } from "../theme/ThemeContext";
 const CustomTextInput = ({
     label,
     placeholder,
@@ -24,22 +24,18 @@ const CustomTextInput = ({
     const [isSecure, setIsSecure] = useState(secureTextEntry || password);
     const renderIcon = () => {
         if (!endIcon) return null;
-
-        // jika ikon adalah "eye", maka bisa toggle secureTextEntry
         if (endIcon === "eye") {
             return (
                 <TouchableOpacity onPress={() => setIsSecure(!isSecure)}>
                     <MaterialCommunityIcons
                         name={isSecure ? "eye-off" : "eye"}
                         size={20}
-                        color={theme.placeholder}
+                        color={theme.icon}
                     />
                 </TouchableOpacity>
             );
         }
-
-        // selain "eye", tampilkan sebagai ikon biasa
-        return <MaterialCommunityIcons name={endIcon} size={20} color="#aaa" />;
+        return <MaterialCommunityIcons name={endIcon} size={20} color={theme.icon} />;
     };
     return (
         <View style={styles.container}>
@@ -103,9 +99,7 @@ const styles = StyleSheet.create({
         height: 40,
         paddingLeft: 14,
         paddingVertical: 10,
-        color: "#000",
         flex: 1,
         fontSize: 16,
-        backgroundColor: "#fff",
     },
 });
