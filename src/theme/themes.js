@@ -4,6 +4,7 @@ export const lightTheme = {
     surface: "#FFFFFF", // Pure white untuk container             // Container/kartu
     text: "#111111", // Teks utama
     textSecondary: "#555555", // Teks sekunder
+    textButton: "#FFFFFF", // Teks pada tombol, putih agar kontras dengan primary
     border: "#DDDDDD", // Garis/border
     primary: "#1E88E5", // Warna utama/aksen
     primaryDark: "#1565C0",
@@ -30,6 +31,7 @@ export const darkTheme = {
     surface: "#1E1E1E", // Slightly lighter for content blocks
     text: "#FFFFFF", // Teks utama
     textSecondary: "#AAAAAA", // Teks sekunder
+    textButton: "#111111", // Teks pada tombol
     border: "#333333", // Garis/border
     primary: "#90CAF9", // Warna utama/aksen
     primaryDark: "#42A5F5",

@@ -32,7 +32,7 @@ const iconMap = {
 };
 
 const AttachmentList = ({ attachments = [] }) => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
     const [loading, setLoading] = useState(false);
 
     const handleDownload = async (url) => {

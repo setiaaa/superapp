@@ -1,31 +1,50 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Appearance } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { lightTheme, darkTheme } from "./themes";
 
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-    const [isDark, setIsDark] = useState(null);
+    const [themeMode, setThemeMode] = useState(null); // "light", "dark", or null (auto)
+    const [systemColorScheme, setSystemColorScheme] = useState(Appearance.getColorScheme());
 
     useEffect(() => {
-        const initialScheme = Appearance.getColorScheme();
-        setIsDark(initialScheme === "dark");
-
-        const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-            setIsDark(colorScheme === "dark");
-        });
-
-        return () => subscription.remove();
+        const loadTheme = async () => {
+            const savedMode = await AsyncStorage.getItem("themeMode");
+            if (savedMode === "light" || savedMode === "dark") {
+                setThemeMode(savedMode);
+            } else {
+                setThemeMode(null); // auto
+            }
+        };
+        loadTheme();
     }, []);
 
-    if (isDark === null) return null; // jangan render dulu sampai tahu mode
+    // Listen to system theme change if in auto mode
+    useEffect(() => {
+        if (themeMode === null) {
+            const listener = Appearance.addChangeListener(({ colorScheme }) => {
+                setSystemColorScheme(colorScheme);
+            });
+            return () => listener.remove();
+        }
+    }, [themeMode]);
 
+    const changeTheme = async (mode) => {
+        setThemeMode(mode);
+        if (mode === "light" || mode === "dark") {
+            await AsyncStorage.setItem("themeMode", mode);
+        } else {
+            await AsyncStorage.removeItem("themeMode");
+        }
+    };
+
+    const isDark = themeMode === "dark" || (themeMode === null && systemColorScheme === "dark");
     const theme = isDark ? darkTheme : lightTheme;
 
-    const toggleTheme = () => setIsDark((prev) => !prev);
-
     return (
-        <ThemeContext.Provider value={{ theme, isDark, toggleTheme }}>
+        <ThemeContext.Provider value={{ theme, isDark, themeMode, changeTheme }}>
             {children}
         </ThemeContext.Provider>
     );

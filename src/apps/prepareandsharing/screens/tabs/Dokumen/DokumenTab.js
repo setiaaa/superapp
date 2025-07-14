@@ -18,7 +18,7 @@ import { useTheme } from "../../../../../theme/ThemeContext"; // Adjust the impo
 
 const DokumenTab = () => {
     const dispatch = useDispatch();
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
     const [token, setToken] = useState("");
     const [page, setPage] = useState(10);
     const navigation = useNavigation();

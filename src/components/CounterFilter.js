@@ -10,7 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as necessary
 
 const CounterFilter = ({ filters = [], selected, onSelect }) => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
     const renderItem = ({ item }) => {
         const isSelected = selected === item.key;
 

@@ -31,11 +31,12 @@ import CustomButton from "../../../../../components/CustomButton";
 import { useTheme } from "../../../../../theme/ThemeContext";
 
 const BerbagiDokumen = ({ route }) => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode } = useTheme();
     const { addressbook } = useSelector((state) => state.addressBookKKP);
     const item = route.params || {};
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const [stateConfig, setStateConfig] = useState({});
     const [token, setToken] = useState("");
     const [judulKegiatan, setJudulKegiatan] = useState("");
     const [pilihanAnggotaGrup, setPilihanAnggotaGrup] = useState([]);
@@ -264,17 +265,24 @@ const BerbagiDokumen = ({ route }) => {
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <ScrollView style={{
-                    backgroundColor: theme.background, flex: 1
-                }}>
+                <ScrollView
+                    style={{
+                        backgroundColor: theme.background,
+                        flex: 1,
+                    }}
+                >
                     <View
                         style={[
                             styles.container,
                             { backgroundColor: theme.background },
                         ]}
                     >
-                        <View style={[styles.wrapper, { backgroundColor: theme.card }]}>
-
+                        <View
+                            style={[
+                                styles.wrapper,
+                                { backgroundColor: theme.card },
+                            ]}
+                        >
                             <View style={styles.input}>
                                 <CustomTextInput
                                     label="Judul Kegiatan"
@@ -284,31 +292,34 @@ const BerbagiDokumen = ({ route }) => {
                                     onChangeText={setJudulKegiatan}
                                 />
                             </View>
-                            <View style={styles.input}>
+                            <TouchableOpacity
+                                style={styles.input}
+                                onPress={() => {
+                                    const config = {
+                                        title: "Peserta Grup",
+                                        tabs: {
+                                            jabatan: true,
+                                            pegawai: false,
+                                        },
+                                        multiselect: true,
+                                        payload: pilihanAnggotaGrup,
+                                        // tipeAddress: "korespondensi",
+                                    };
+                                    setStateConfig(config);
+                                    console.log("Ditekan");
+                                    navigation.navigate("AddressBook", {
+                                        config: config,
+                                    });
+                                }}
+                            >
                                 <CustomTextInput
                                     label="Bagikan Kepada"
                                     placeholder=""
                                     mandatory={true}
                                     endIcon={"account"}
                                     editable={false}
-                                    onPress={() => {
-                                        const config = {
-                                            title: "Peserta Grup",
-                                            tabs: {
-                                                jabatan: true,
-                                                pegawai: false,
-                                            },
-                                            multiselect: true,
-                                            payload: pilihanAnggotaGrup,
-                                            // tipeAddress: "korespondensi",
-                                        };
-                                        setStateConfig(config);
-                                        navigation.navigate("AddressBook", {
-                                            config: config,
-                                        });
-                                    }}
                                 />
-                            </View>
+                            </TouchableOpacity>
                             <View style={styles.input}>
                                 <CustomTextInput
                                     label="Peninjau"
@@ -365,9 +376,16 @@ const BerbagiDokumen = ({ route }) => {
                                 />
                             </View>
                             <View style={styles.input}>
-                                <Text style={[styles.label, {color: theme.text}]}>
+                                <Text
+                                    style={[
+                                        styles.label,
+                                        { color: theme.text },
+                                    ]}
+                                >
                                     Lampiran
-                                    <Text style={{ color: theme.error }}>*</Text>
+                                    <Text style={{ color: theme.error }}>
+                                        *
+                                    </Text>
                                 </Text>
 
                                 {/* Box luar dengan fixed height */}
@@ -396,7 +414,12 @@ const BerbagiDokumen = ({ route }) => {
                                                 size={32}
                                                 color={theme.icon}
                                             />
-                                            <Text style={{ fontSize: 14, color: theme.textSecondary }}>
+                                            <Text
+                                                style={{
+                                                    fontSize: 14,
+                                                    color: theme.textSecondary,
+                                                }}
+                                            >
                                                 Tambahkan Lampiran
                                             </Text>
                                         </TouchableOpacity>
@@ -434,11 +457,12 @@ const BerbagiDokumen = ({ route }) => {
                                                                 padding: 8,
                                                                 gap: 12,
                                                                 borderWidth: 1,
-                                                                borderColor: theme.border,
+                                                                borderColor:
+                                                                    theme.border,
                                                                 borderRadius: 8,
                                                                 marginBottom: 8,
                                                                 backgroundColor:
-                                                                    theme.card
+                                                                    theme.card,
                                                             }}
                                                         >
                                                             <Image
@@ -528,7 +552,9 @@ const BerbagiDokumen = ({ route }) => {
                                                                 <MaterialCommunityIcons
                                                                     name="trash-can-outline"
                                                                     size={20}
-                                                                    color={theme.error}
+                                                                    color={
+                                                                        theme.error
+                                                                    }
                                                                 />
                                                             </TouchableOpacity>
                                                         </View>
@@ -548,7 +574,11 @@ const BerbagiDokumen = ({ route }) => {
                                                     alignSelf: "center",
                                                 }}
                                             >
-                                                <Text style={{ color: theme.text }}>
+                                                <Text
+                                                    style={{
+                                                        color: theme.text,
+                                                    }}
+                                                >
                                                     + Tambah Lampiran
                                                 </Text>
                                             </TouchableOpacity>

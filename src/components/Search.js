@@ -6,7 +6,7 @@ import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as n
 
 export const Search = ({ onSearch, placeholder, iconColor }) => {
     // const { device } = useSelector((state) => state.apps);
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
     return (
         <View style={[
                 styles.input,

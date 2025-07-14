@@ -26,7 +26,7 @@ import { Config } from "../../../services/config"; // Adjust the import path as 
 import { useTheme } from "../../../theme/ThemeContext";
 
 const ProfileTab = () => {
-    const { theme } = useTheme(); // Assuming you have a useTheme hook for theming
+    const { isDark, toggleTheme, theme } = useTheme(); // Assuming you have a useTheme hook for theming
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const [token, setToken] = useState(""); // Initialize token state
@@ -34,6 +34,7 @@ const ProfileTab = () => {
     const { profile, linimasa, loading, responReset } = useSelector(
         (state) => state.account
     );
+
     useEffect(() => {
         getTokenValue().then((val) => {
             setToken(val);
@@ -58,6 +59,11 @@ const ProfileTab = () => {
                     {profile.nama_jabatan}
                 </Text>
             </View>
+            {/* <CustomButton title="Tema" onPress={toggleTheme} /> */}
+            <CustomButton title="Tema" onPress={() => {
+                navigation.navigate("Tema");
+            }}/>
+
             <CustomButton
                 title="Logout"
                 icon="logout"
@@ -79,11 +85,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        gap: 16,
     },
     cardProfile: {
         alignItems: "flex-start",
         justifyContent: "center",
-        marginBottom: 16,
         borderRadius: 12,
         padding: 16,
     },

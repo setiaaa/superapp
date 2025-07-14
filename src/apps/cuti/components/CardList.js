@@ -7,7 +7,7 @@ import { getDetailArsipCuti } from "../service/cuti";
 import { useTheme } from "../../../theme/ThemeContext"; // Adjust the import path as necessary
 
 const CardList = ({ item, token }) => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const getDetail = (id) => {

@@ -11,11 +11,11 @@ import {
     setLoadMore,
     setRating,
 } from "../store/prepareandsharing";
-import DokumenDetail from "../screens/tabs/Dokumen/DokumenDetail";
+import DokumenDetail from "../screens/tabs/DokumenDetail";
 import { useTheme } from "../../../theme/ThemeContext";
 
 const CardList = ({ item, token, tipe }) => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode } = useTheme();
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const getDetail = (id) => {
@@ -43,6 +43,11 @@ const CardList = ({ item, token, tipe }) => {
                 } else if (tipe === "Published" || tipe === "review") {
                     navigation.navigate("DokumenDetail", {
                         tipe: tipe, // untuk ditangani oleh DokumenDetail
+                    });
+                } else {
+                    console.log("dibagikan");
+                    navigation.navigate("DokumenDetail", {
+                        tipe: tipe,
                     });
                 }
             }}

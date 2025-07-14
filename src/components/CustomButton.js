@@ -11,11 +11,11 @@ const CustomButton = ({
     startIcon = null,
     endIcon = null,
 }) => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
 
     const backgroundColor = color ? color : theme.surface;
 
-    const textColor = color == null ? theme.textSecondary : theme.text; // agar kontras di background berwarna
+    const textColor = color == null ? theme.textSecondary : theme.textButton; // agar kontras di background berwarna
 
     const borderColor = color ?? theme.border;
     return (

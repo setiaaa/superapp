@@ -9,7 +9,7 @@ import {
 import { useTheme } from "../theme/ThemeContext"; // pastikan path benar
 
 const BadgeFilter = ({ filters, selectedFilter, onSelect }) => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
 
     return (
         <View style={{ marginVertical: 12 }}>

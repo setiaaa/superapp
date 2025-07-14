@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { getTokenValue } from "../../../../../../services/session";
-import AttachmentList from "../../../../components/AttachmentList";
-import { useTheme } from "../../../../../../theme/ThemeContext";
+import { getTokenValue } from "../../../../../services/session";
+import AttachmentList from "../../../components/AttachmentList";
+import { useTheme } from "../../../../../theme/ThemeContext";
 
 const LampiranTab = () => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode } = useTheme();
     const [token, setToken] = useState("");
     useEffect(() => {
         getTokenValue().then((val) => {
@@ -28,6 +28,11 @@ const LampiranTab = () => {
                     gap: 16,
                 }}
             >
+                <Text style={{ color: theme.textSecondary }}>
+                    Lampiran dokumen ini berisi file-file yang terkait dengan
+                    dokumen tersebut. Anda dapat mengunduh atau melihat lampiran
+                    ini sesuai kebutuhan.
+                </Text>
                 <AttachmentList
                     attachments={dokumen?.detail?.attachments || []}
                 />

@@ -20,7 +20,7 @@ const CustomTextInput = ({
     endIcon = null,
     password = false,
 }) => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
     const [isSecure, setIsSecure] = useState(secureTextEntry || password);
     const renderIcon = () => {
         if (!endIcon) return null;

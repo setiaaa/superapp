@@ -17,6 +17,20 @@ import { useState } from "react";
 //     }
 // };
 
+export const getThemeState = async () => {
+  try {
+    const theme = await AsyncStorage.getItem("theme");
+    return theme;
+  } catch (error) {}
+}
+
+export const setThemeState = async (value) => {
+  try {
+    console.log(value)
+    await AsyncStorage.setItem("theme", value);
+  } catch (e) {}
+}
+
 export const getTokenValue = async () => {
   try {
     const token = await AsyncStorage.getItem("token");

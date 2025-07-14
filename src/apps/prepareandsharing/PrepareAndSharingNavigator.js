@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AppHeader from "../../components/Header";
 import PrepareAndSharingScreen from "./screens/PrepareAndSharingScreen";
-import DokumenDetail from "./screens/tabs/Dokumen/DokumenDetail";
+import DokumenDetail from "./screens/tabs/DokumenDetail";
 import BerbagiDokumen from "./screens/tabs/Dokumen/BerbagiDokumen";
 
 const Stack = createNativeStackNavigator();

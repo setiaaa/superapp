@@ -6,7 +6,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as necessary
 
 const Header = ({ title, showBack = false }) => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
     const navigation = useNavigation();
 
     const canGoBack = navigation.canGoBack();

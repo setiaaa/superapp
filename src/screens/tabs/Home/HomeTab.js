@@ -29,7 +29,7 @@ const itemSize = 100; // ✅ Tetap, tidak tergantung lebar layar
 const spacing = 16;
 
 const BerandaTab = () => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
     const [token, setToken] = useState("");
     const dispatch = useDispatch();
     const navigation = useNavigation();
@@ -97,7 +97,7 @@ const BerandaTab = () => {
                     styles.container,
                     { backgroundColor: theme.surface },
                 ]}
-                columnWrapperStyle={styles.row}
+                // columnWrapperStyle={styles.row}
             />
         </View>
     );

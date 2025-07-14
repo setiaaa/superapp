@@ -21,7 +21,7 @@ const events = [
 ];
 
 const CalenderScreen = () => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
 
     // useEffect
     dayjs.locale("id");

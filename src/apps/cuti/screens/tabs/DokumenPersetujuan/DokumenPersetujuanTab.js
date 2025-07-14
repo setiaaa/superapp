@@ -15,7 +15,7 @@ import CardList from "../../../components/CardList";
 import { useTheme } from "../../../../../theme/ThemeContext"; // Adjust the import path as necessary
 
 const DokumenPersetujuanTab = () => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
     const [token, setToken] = useState("");
     const [page, setPage] = useState(10);
     const dispatch = useDispatch();

@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "../../../../../theme/ThemeContext"; // Adjust the import path as necessary
 
 const DokumenPersetujuanDetail = ({ route }) => {
-    const { theme } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
     const navigation = useNavigation();
     useEffect(() => {
         navigation.setOptions({

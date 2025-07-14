@@ -13,10 +13,11 @@ import {
 import { DeviceType, getDeviceTypeAsync } from "expo-device";
 import { ThemeProvider, useTheme } from "./src/theme/ThemeContext";
 import { StatusBar } from "expo-status-bar";
+import { PaperProvider } from "react-native-paper";
 
 // ✅ Komponen ini berada di dalam ThemeProvider
 const AppContent = () => {
-    const { theme, isDark } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode } = useTheme();
 
     return (
         <>
@@ -26,15 +27,11 @@ const AppContent = () => {
                 animated={true}
                 backgroundColor={theme.background}
             />
-
-            <KeyboardAvoidingView
-                style={{ flex: 1 }}
-                behavior={Platform.OS === "ios" ? "padding" : undefined}
-            >
-                <SafeAreaProvider style={{ backgroundColor: theme.surface }}>
+            <SafeAreaProvider style={{ backgroundColor: theme.surface }}>
+                <PaperProvider>
                     <AppNavigator />
-                </SafeAreaProvider >
-            </KeyboardAvoidingView>
+                </PaperProvider>
+            </SafeAreaProvider>
         </>
     );
 };

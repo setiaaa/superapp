@@ -6,7 +6,7 @@ import { useTheme } from "../theme/ThemeContext"; // Pastikan path sesuai
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = ({ tabs = [] }) => {
-  const { theme } = useTheme(); // 🔥 ambil tema aktif
+  const { theme, isDark, toggleTheme, themeMode  } = useTheme(); // 🔥 ambil tema aktif
 
   return (
     <Tab.Navigator
