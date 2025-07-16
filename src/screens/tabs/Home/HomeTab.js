@@ -52,7 +52,7 @@ const itemSize = 100; // ✅ Tetap, tidak tergantung lebar layar
 const spacing = 16;
 
 const BerandaTab = () => {
-    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
+  const { theme, isDark, toggleTheme, themeMode } = useTheme();
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -61,11 +61,11 @@ const BerandaTab = () => {
   const [error, setError] = useState(null);
   const [news, setNews] = useState(dummyData);
 
-    useEffect(() => {
-        getTokenValue().then((val) => {
-            setToken(val);
-        });
-    }, []);
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
 
   useEffect(() => {
     if (token !== "") {
@@ -76,45 +76,33 @@ const BerandaTab = () => {
   const { profile } = useSelector((state) => state.account);
   const renderItem = ({ item }) => (
     <TouchableOpacity
-           
       style={[
-                styles.item,
-                { backgroundColor: theme.surface, borderColor: theme.border },
-            ]}
-           
+        styles.item,
+        { backgroundColor: theme.surface, borderColor: theme.border },
+      ]}
       onPress={() => navigation.navigate(item.key)}
-        
     >
-      <MaterialCommunityIcons
-                name={item.icon}
-                size={26}
-                color={theme.icon}
-            />
-      <Text style={[styles.label, { color: theme.text }]}>
-                {item.label}
-            </Text>
+      <MaterialCommunityIcons name={item.icon} size={26} color={theme.icon} />
+      <Text style={[styles.label, { color: theme.text }]}>{item.label}</Text>
     </TouchableOpacity>
   );
-    // saya ingin cek state tema saat ini
+  // saya ingin cek state tema saat ini
 
   return (
     <View style={[styles.surface, { backgroundColor: theme.background }]}>
       <View
-                style={[
-                    styles.greetingContainer,
-                    { backgroundColor: theme.surface },
-                ]}
-            >
+        style={[styles.greetingContainer, { backgroundColor: theme.surface }]}
+      >
         <Text style={[styles.username, { color: theme.text }]}>
-                    {profile?.nama || "Selamat Datang"}
-                </Text>
+          {profile?.nama || "Selamat Datang"}
+        </Text>
         <Text
-                    numberOfLines={2}
-                    ellipsizeMode="tail"
-                    style={[styles.position, { color: theme.text }]}
-                >
-                    {profile?.nama_jabatan || "-"}
-                </Text>
+          numberOfLines={2}
+          ellipsizeMode="tail"
+          style={[styles.position, { color: theme.text }]}
+        >
+          {profile?.nama_jabatan || "-"}
+        </Text>
       </View>
       <View style={styles.carouselWrapper}>
         {loading ? (
@@ -134,9 +122,9 @@ const BerandaTab = () => {
           Dimensions.get("window").width / (itemSize + spacing)
         )}
         contentContainerStyle={[
-                    styles.container,
-                    { backgroundColor: theme.surface },
-                ]}
+          styles.container,
+          { backgroundColor: theme.surface },
+        ]}
         // columnWrapperStyle={styles.row}
       />
     </View>
@@ -146,58 +134,58 @@ const BerandaTab = () => {
 export default BerandaTab;
 
 const styles = StyleSheet.create({
-    surface: {
-        flex: 1,
-        padding: 20,
-        gap: 20,
-    },
-    carouselWrapper: {
+  surface: {
+    flex: 1,
+    padding: 20,
+    gap: 20,
+  },
+  carouselWrapper: {
     height: 250, // Tinggi untuk carousel, sesuaikan sesuai kebutuhan
     width: "100%",
   },
-    greetingContainer: {
-        gap: 4,
-        borderRadius: 12,
-        paddingTop: 8,
-        paddingBottom: 10,
-        paddingHorizontal: 16,
-        alignSelf: "flex-end",
-        maxHeight: 56,
-        // height: 56,
-    },
-    username: {
-        fontSize: 12,
-        fontWeight: "bold",
-        textAlign: "right",
-    },
-    position: {
-        fontSize: 8,
-        fontWeight: "500",
-        textAlign: "right",
-        maxWidth: "50%",
-    },
-    container: {
-        borderRadius: 12,
-        alignItems: "center",
-    },
-    row: {
-        justifyContent: "space-between",
-        gap: spacing,
-    },
-    item: {
-        width: itemSize,
-        height: itemSize,
-        borderRadius: 12,
-        alignItems: "center",
-        justifyContent: "center",
-        borderWidth: 1,
-        // marginBottom: spacing,
-        marginVertical: spacing / 2,
-    },
-    label: {
-        marginTop: 6,
-        fontSize: 12,
-        textAlign: "center",
-        color: "#333",
-    },
+  greetingContainer: {
+    gap: 4,
+    borderRadius: 12,
+    paddingTop: 8,
+    paddingBottom: 10,
+    paddingHorizontal: 16,
+    alignSelf: "flex-end",
+    maxHeight: 56,
+    // height: 56,
+  },
+  username: {
+    fontSize: 12,
+    fontWeight: "bold",
+    textAlign: "right",
+  },
+  position: {
+    fontSize: 8,
+    fontWeight: "500",
+    textAlign: "right",
+    maxWidth: "50%",
+  },
+  container: {
+    borderRadius: 12,
+    alignItems: "center",
+  },
+  row: {
+    justifyContent: "space-between",
+    gap: spacing,
+  },
+  item: {
+    width: itemSize,
+    height: itemSize,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    // marginBottom: spacing,
+    marginVertical: spacing / 2,
+  },
+  label: {
+    marginTop: 6,
+    fontSize: 12,
+    textAlign: "center",
+    color: "#333",
+  },
 });

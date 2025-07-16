@@ -6,7 +6,7 @@ import { useTheme } from "../theme/ThemeContext"; // Pastikan path sesuai
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = ({ tabs = [] }) => {
-  const { theme, isDark, toggleTheme, themeMode  } = useTheme(); // 🔥 ambil tema aktif
+  const { theme, isDark, toggleTheme, themeMode } = useTheme(); // 🔥 ambil tema aktif
 
   return (
     <Tab.Navigator
@@ -16,12 +16,18 @@ const BottomTabNavigator = ({ tabs = [] }) => {
           headerShown: false,
           tabBarActiveTintColor: theme.primary, // 🔵 warna aktif
           tabBarInactiveTintColor: theme.iconSecondary, // ⚪ warna pasif
-          tabBarLabelStyle: { fontSize: 12 },
+          tabBarLabelStyle: {
+            fontSize: 12,
+            textAlign: "center",
+            lineHeight: 14,
+          },
           tabBarStyle: {
             backgroundColor: theme.card, // 🟦 latar tab bar
             borderTopColor: theme.border,
             borderTopWidth: 1,
-            
+            height: 70,
+            paddingBottom: 5,
+            paddingTop: 5,
           },
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -34,11 +40,7 @@ const BottomTabNavigator = ({ tabs = [] }) => {
       }}
     >
       {tabs.map((tab) => (
-        <Tab.Screen
-          key={tab.name}
-          name={tab.name}
-          component={tab.component}
-        />
+        <Tab.Screen key={tab.name} name={tab.name} component={tab.component} />
       ))}
     </Tab.Navigator>
   );
