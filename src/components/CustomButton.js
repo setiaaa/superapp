@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as necessary
+import { useTheme } from "../theme/ThemeContext";
 
 const CustomButton = ({
   title,
@@ -15,7 +15,7 @@ const CustomButton = ({
 
     const backgroundColor = color ? color : theme.surface;
 
-    const textColor = color == null ? theme.textSecondary : theme.textButton; // agar kontras di background berwarna
+    const textColor = color == null ? theme.textSecondary : theme.textButton;
 
     const borderColor = color ?? theme.border;
     return (
@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#ccc",
   },
   buttonText: {
-    // color: "#fff",
     fontWeight: "600",
     fontSize: 16,
   },

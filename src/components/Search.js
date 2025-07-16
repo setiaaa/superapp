@@ -2,10 +2,9 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 // import { useSelector } from "react-redux";
-import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as necessary
+import { useTheme } from "../theme/ThemeContext";
 
 export const Search = ({ onSearch, placeholder, iconColor }) => {
-    // const { device } = useSelector((state) => state.apps);
     const { theme, isDark, toggleTheme, themeMode  } = useTheme();
     return (
         <View style={[
@@ -17,16 +16,14 @@ export const Search = ({ onSearch, placeholder, iconColor }) => {
             ]}>
             <Ionicons
                 name="search"
-                // size={fontSizeResponsive("H3", device)}
                 color={iconColor || theme.iconSecondary}
             />
             <TextInput
                 placeholder={placeholder}
                 placeholderTextColor={theme.placeholder}
                 style={{
-                    // fontSize: fontSizeResponsive("H2", device),
                     flex: 1,
-                    color: theme.text, // 🎨 warna teks
+                    color: theme.text,
                 }}
                 maxLength={30}
                 onChangeText={( onSearch )}

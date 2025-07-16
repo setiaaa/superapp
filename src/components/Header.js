@@ -1,9 +1,9 @@
-// Header.js
+
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as necessary
+import { useTheme } from "../theme/ThemeContext";
 
 const Header = ({ title, showBack = false }) => {
     const { theme, isDark, toggleTheme, themeMode  } = useTheme();
@@ -15,8 +15,8 @@ const Header = ({ title, showBack = false }) => {
             style={[
                 styles.header,
                 {
-                    backgroundColor: theme.card, // 🟦 latar belakang header
-                    borderBottomColor: theme.border, // 🟧 garis bawah
+                    backgroundColor: theme.card,
+                    borderBottomColor: theme.border,
                 },
             ]}
         >
@@ -25,7 +25,7 @@ const Header = ({ title, showBack = false }) => {
                     ...styles.headerText,
                     position: "absolute",
                     textAlign: "center",
-                    color: theme.text, // 🟩 teks judul
+                    color: theme.text,
                 }}
             >
                 {title}

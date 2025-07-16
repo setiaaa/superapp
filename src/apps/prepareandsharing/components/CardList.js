@@ -13,8 +13,9 @@ import {
 } from "../store/prepareandsharing";
 import DokumenDetail from "../screens/tabs/DokumenDetail";
 import { useTheme } from "../../../theme/ThemeContext";
+import { Ionicons } from "@expo/vector-icons";
 
-const CardList = ({ item, token, tipe }) => {
+const CardList = ({ item, token, tipe, tab }) => {
     const { theme, isDark, toggleTheme, themeMode } = useTheme();
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -26,7 +27,10 @@ const CardList = ({ item, token, tipe }) => {
 
     return (
         <TouchableOpacity
-            style={[styles.card, { backgroundColor: theme.card }]}
+            style={[
+                styles.card,
+                { backgroundColor: theme.card, shadowColor: theme.shadow },
+            ]}
             onPress={() => {
                 getDetail(item.id);
 
@@ -42,10 +46,16 @@ const CardList = ({ item, token, tipe }) => {
                     });
                 } else if (tipe === "Published" || tipe === "review") {
                     navigation.navigate("DokumenDetail", {
-                        tipe: tipe, // untuk ditangani oleh DokumenDetail
+                        tipe: tipe,
                     });
+                    if (tab === "TinjauanTab") {
+                        navigation.navigate("DokumenDetail", {
+                            tipe: tipe,
+                            tab: tab,
+                        });
+                    }
                 } else {
-                    console.log("dibagikan");
+                    console.log("tes param");
                     navigation.navigate("DokumenDetail", {
                         tipe: tipe,
                     });
@@ -53,7 +63,7 @@ const CardList = ({ item, token, tipe }) => {
             }}
         >
             {/* <Text style={styles.description}>{item?.id}</Text> */}
-            <View style={styles.cardHeader}>
+            {/* <View style={styles.cardHeader}>
                 <Text style={[styles.createdDate, { color: theme.text }]}>
                     {item.title}
                 </Text>
@@ -66,7 +76,46 @@ const CardList = ({ item, token, tipe }) => {
             </Text>
             <Text style={[styles.documentType, { color: theme.textSecondary }]}>
                 {moment(item.updated_at).locale("id").format("DD MMMM yyyy")}
+            </Text> */}
+
+            <Text style={[styles.title, { color: theme.text }]}>
+                {item.title}
             </Text>
+
+            <View style={styles.row}>
+                <Ionicons
+                    name="document-attach-outline"
+                    size={16}
+                    color="#666"
+                />
+                <Text style={[styles.text, { color: theme.text }]}>
+                    Lampiran: {item?.attachments.length}
+                </Text>
+            </View>
+
+            <View style={styles.row}>
+                <Ionicons
+                    name="calendar-outline"
+                    size={16}
+                    color={theme.icon}
+                />
+                <Text style={[styles.text, { color: theme.textSecondary }]}>
+                    Dibuat:{" "}
+                    {moment(item.created_at)
+                        .locale("id")
+                        .format("DD MMMM yyyy")}
+                </Text>
+            </View>
+
+            <View style={styles.row}>
+                <Ionicons name="refresh-outline" size={16} color={theme.icon} />
+                <Text style={[styles.text, { color: theme.textSecondary }]}>
+                    Diperbarui:{" "}
+                    {moment(item.updated_at)
+                        .locale("id")
+                        .format("DD MMMM yyyy")}
+                </Text>
+            </View>
         </TouchableOpacity>
     );
 };
@@ -75,25 +124,25 @@ const styles = StyleSheet.create({
     card: {
         borderRadius: 12,
         padding: 16,
+        marginVertical: 8,
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 4,
+        elevation: 2,
         gap: 8,
-        marginBottom: 12,
     },
-    cardHeader: {
+    title: {
         fontSize: 16,
-        fontWeight: "600",
+        fontWeight: "bold",
+    },
+    row: {
         flexDirection: "row",
-        justifyContent: "space-between",
+        alignItems: "center",
+        marginTop: 4,
     },
-    createdDate: {
-        fontSize: 16,
-        fontWeight: "600",
-    },
-    description: {
+    text: {
+        marginLeft: 6,
         fontSize: 14,
-        color: "#555",
-    },
-    documentType: {
-        fontSize: 13,
     },
 });
 

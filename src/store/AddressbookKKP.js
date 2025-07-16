@@ -74,9 +74,9 @@ const AddressbookKKPSlice = createSlice({
         function renameChildrenToDescendants(datas) {
           datas.forEach((member) => {
             if (member.nodes) {
-              member.children = member.nodes; // Mengganti atribut "nodes" dengan "descendants"
-              delete member.nodes; // Menghapus atribut "nodes" yang lama
-              renameChildrenToDescendants(member.children); // Rekursif untuk anggota keluarga berikutnya
+              member.children = member.nodes;
+              delete member.nodes;
+              renameChildrenToDescendants(member.children);
             }
           });
         }

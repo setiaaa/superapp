@@ -58,7 +58,7 @@ export const getSubDivisionFilter = createAsyncThunk(
 export const getDocumentDibagikan = createAsyncThunk(
     "prepareandsharing/getDocumentDibagikan",
     async ({ token, page, tipe }) => {
-        console.log(`${token}, ${page}, ${tipe}`);
+        console.log("Fetching shared documents with type:", tipe);
         try {
             const respon = await axiosInstance.get(
                 `${repository}shared-documents/?limit=${page}&tipe=${tipe}`,
@@ -69,7 +69,7 @@ export const getDocumentDibagikan = createAsyncThunk(
             return respon?.data.result;
         } catch (error) {
             console.error("Error fetching shared documents:", error);
-            throw error; // Rethrow the error to be handled by the calling code
+            throw error;
         }
     }
 );
@@ -141,27 +141,25 @@ export const postAttachmentRepo = createAsyncThunk(
     "prepareandsharing/postAttachmentRepo",
     async (data) => {
         try {
-            // Membuat FormData
             const formData = new FormData();
             formData.append("files", {
-                uri: data.result.uri, // Path ke file
-                type: data.result.mimeType, // MIME type dari file
-                name: data.result.name, // Nama file (dengan ekstensi)
+                uri: data.result.uri,
+                type: data.result.mimeType,
+                name: data.result.name,
             });
 
-            // Kirim data ke server menggunakan axiosInstance
             const respon = await axiosInstance.post(
                 `${repository}attachment/`,
                 formData,
                 {
                     headers: {
-                        Authorization: data.token, // Sertakan token otorisasi
+                        Authorization: data.token,
                         "Content-Type": "multipart/form-data",
                     },
                 }
             );
 
-            return respon?.data.result; // Kembalikan hasil dari server
+            return respon?.data.result;
         } catch (error) {
             console.error("Error uploading file:", error);
             throw new Error("Gagal mengunggah file. Silakan coba lagi.");
@@ -172,14 +170,19 @@ export const postAttachmentRepo = createAsyncThunk(
 export const postBerbagiDokumen = createAsyncThunk(
     "prepareandsharing/postBerbagiDokumen",
     async (data) => {
-        const respon = await axiosInstance.post(
-            `${repository}document-share/`,
-            data.result,
-            {
-                headers: { Authorization: data.token },
-            }
-        );
-        return respon?.data.result;
+        try {
+            const respon = await axiosInstance.post(
+                `${repository}document-share/`,
+                data.result,
+                {
+                    headers: { Authorization: data.token },
+                }
+            );
+            return respon?.data.result;
+        } catch (error) {
+            console.error("Error sharing document:", error);
+            throw new Error("Gagal membagikan dokumen. Silakan coba lagi.");
+        }
     }
 );
 

@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { setIsBypass, setNotifIos } from "../../../../../store/Account";
 import { getTokenValue } from "../../../../../services/session";
 import { useNavigation } from "@react-navigation/native";
-import { useTheme } from "../../../../../theme/ThemeContext"; // Adjust the import path as necessary
+import { useTheme } from "../../../../../theme/ThemeContext";
 
 const DokumenPersetujuanDetail = ({ route }) => {
     const { theme, isDark, toggleTheme, themeMode  } = useTheme();

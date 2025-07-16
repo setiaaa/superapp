@@ -23,6 +23,7 @@ import {
 // import { TopAddressBook } from "../utils/menutab";
 import { useTheme } from "../theme/ThemeContext";
 import Header from "../components/Header";
+import { AddressBookDropdown } from "./AddressBookDropdown";
 
 const CardListPilih = ({ item, addressbook, device, config }) => {
     const { isDark, toggleTheme, theme } = useTheme(); // Assuming you have a useTheme hook for theming
@@ -65,7 +66,6 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
                         marginTop: 10,
                         marginHorizontal: "5%",
                         gap: 10,
-                        // backgroundColor: theme.card,
                         padding: 10,
                         borderRadius: 8,
                         //shadow ios
@@ -89,11 +89,12 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
                             }
                         }}
                     >
-                        <Ionicons name="close-circle" size={24} />
+                        <Ionicons name="close-circle" size={24} color={theme.icon} />
                     </TouchableOpacity>
                     <Text
                         style={{
                             width: "80%",
+                            color: theme.text,
                         }}
                     >
                         {item.person !== undefined ? item.person : ""}
@@ -172,11 +173,11 @@ const CardListPilih = ({ item, addressbook, device, config }) => {
                             }
                         }}
                     >
-                        <Ionicons name="close-circle" size={24} />
+                        <Ionicons name="close-circle" size={24} color={theme.icon} />
                     </TouchableOpacity>
                     <View style={{ width: "80%" }}>
-                        <Text style={{}}>{item.nama || item.fullname}</Text>
-                        <Text style={{}}>{item.nip ? item.nip : item.nik}</Text>
+                        <Text style={{color: theme.text}}>{item.nama || item.fullname}</Text>
+                        <Text style={{color: theme.text}}>{item.nip ? item.nip : item.nik}</Text>
                     </View>
                 </View>
             )}
@@ -231,18 +232,6 @@ export const AddressBook = ({ route }) => {
         bottomSheetModalMemberRef.current?.present();
     };
 
-    // if (addressbook.selected.length > 0) {
-    //   bottomSheetMember();
-    // }
-
-    // useEffect(() => {
-    //   if (addressbook.selected.length > 0) {
-    //     bottomSheetMember();
-    //   }
-    // }, []);
-
-    // const { device } = useSelector((state) => state.apps);
-
     return (
         <View style={{ flex: 1 }}>
             <GestureHandlerRootView>
@@ -252,9 +241,9 @@ export const AddressBook = ({ route }) => {
                     onBackPress={() => navigation.goBack()}
                 />
 
-                <View style={{ height: "90%" }}>
-                    {/* <TopAddressBook config={config} /> */}
-                </View>
+                {/* <View style={{ style: 1 }}> */}
+                <AddressBookDropdown config={config} />
+                {/* </View> */}
 
                 <BottomSheetModalProvider style={{}}>
                     <BottomSheetModal
@@ -265,8 +254,6 @@ export const AddressBook = ({ route }) => {
                         index={0}
                         style={{
                             borderRadius: 50,
-                            borderColor: "green",
-                            borderWidth: 2,
                             backgroundColor: theme.surface,
                         }}
                         keyboardBlurBehavior="restore"
@@ -275,17 +262,77 @@ export const AddressBook = ({ route }) => {
                         backgroundStyle={{ backgroundColor: theme.card }}
                     >
                         <BottomSheetView
-                            onLayout={handleContentLayout}
                             style={{
-                                borderColor: "red",
-                                borderWidth: 1,
+                                paddingHorizontal: 20,
+                                paddingVertical: 12,
+                                flex: 1,
+                                gap: 12,
                             }}
+                            onLayout={handleContentLayout}
                         >
+                            <View
+                                style={{
+                                    alignItems: "center",
+                                    flexDirection: "row",
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        fontWeight: "500",
+                                        fontSize: 16,
+                                        color: theme.text,
+                                        flex: 1,
+                                    }}
+                                >
+                                    Daftar ({addressbook.selected.length}{" "}
+                                    Pilihan)
+                                </Text>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        dispatch(setAddressbookSelected([]));
+                                    }}
+                                >
+                                    <Text style={{ color: theme.text }}>
+                                        Hapus Semua
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{}}>
+                                {addressbook.selected.length === 0 ? (
+                                    <View style={{ alignItems: "center" }}>
+                                        <Text style={{}}>
+                                            Belum ada yang dipilih
+                                        </Text>
+                                    </View>
+                                ) : (
+                                    <View
+                                        style={{
+                                        }}
+                                    >
+                                        <FlatList
+                                            data={addressbook.selected}
+                                            renderItem={({ item }) => (
+                                                <CardListPilih
+                                                    item={item}
+                                                    addressbook={addressbook}
+                                                    config={config}
+                                                />
+                                            )}
+                                            style={{ height: 600 }}
+                                            keyExtractor={(item) =>
+                                                item.nip ? item.nip : item.code
+                                            }
+                                        />
+                                    </View>
+                                )}
+                            </View>
+                        </BottomSheetView>
+                        {/* 
+                        <View onLayout={handleContentLayout}>
                             <View
                                 style={{
                                     flex: 1,
                                     borderRadius: 12,
-                                    paddingBottom: 20,
                                 }}
                             >
                                 <View
@@ -294,26 +341,7 @@ export const AddressBook = ({ route }) => {
                                         flexDirection: "row",
                                         justifyContent: "space-between",
                                     }}
-                                >
-                                    <Text
-                                        style={{
-                                            fontWeight: 500,
-                                            marginBottom: 50,
-                                        }}
-                                    >
-                                        Daftar ({addressbook.selected.length}{" "}
-                                        Pilihan)
-                                    </Text>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            dispatch(
-                                                setAddressbookSelected([])
-                                            );
-                                        }}
-                                    >
-                                        <Text style={{}}>Hapus Semua</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                ></View>
                                 {addressbook.selected.length === 0 ? (
                                     <View style={{ alignItems: "center" }}>
                                         <Text style={{}}>
@@ -339,7 +367,7 @@ export const AddressBook = ({ route }) => {
                                     </View>
                                 )}
                             </View>
-                        </BottomSheetView>
+                        </View> */}
                     </BottomSheetModal>
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>

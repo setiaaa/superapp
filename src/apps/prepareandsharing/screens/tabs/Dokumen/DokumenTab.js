@@ -5,6 +5,7 @@ import {
     StyleSheet,
     Touchable,
     TouchableOpacity,
+    RefreshControl,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getDocument } from "../../../service/prepareandsharing";
@@ -18,10 +19,11 @@ import { useTheme } from "../../../../../theme/ThemeContext"; // Adjust the impo
 
 const DokumenTab = () => {
     const dispatch = useDispatch();
-    const { theme, isDark, toggleTheme, themeMode  } = useTheme();
+    const { theme, isDark, toggleTheme, themeMode } = useTheme();
     const [token, setToken] = useState("");
     const [page, setPage] = useState(10);
     const navigation = useNavigation();
+    const [refreshing, setRefreshing] = useState(false);
 
     const filterType = [
         { key: "draft", published: "false", value: "Draft", label: "Draft" },
@@ -70,12 +72,28 @@ const DokumenTab = () => {
         }
     }, [type, token]);
 
+    const onRefresh = React.useCallback(() => {
+        try {
+            if (token !== "") {
+                dispatch(
+                    getDocument({ token: token, page: page, type: type.key })
+                );
+            }
+        } catch (error) {}
+
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, [token, page, type]);
+
     const { dokumen, loading, load } = useSelector(
         (state) => state.prepareandsharing
     );
     const renderItem = ({ item }) => (
         <CardList item={item} token={token} tipe={type.value} />
     );
+
     return (
         <View style={[styles.container, { backgroundColor: theme.background }]}>
             <View style={{ padding: 0 }}>
@@ -89,6 +107,12 @@ const DokumenTab = () => {
                 <FlatList
                     data={dokumen.lists !== null ? dokumen.lists : []}
                     renderItem={renderItem}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
                 />
             </View>
             <TouchableOpacity
@@ -99,7 +123,7 @@ const DokumenTab = () => {
                     padding: 12,
                     backgroundColor: theme.primary,
                     borderRadius: 50,
-                    shadowColor: theme.shadow
+                    shadowColor: theme.shadow,
                 }}
                 onPress={() => {
                     navigation.navigate("BerbagiDokumen");
@@ -107,7 +131,11 @@ const DokumenTab = () => {
                     // navigation.navigate("CreateDocument");
                 }}
             >
-                <MaterialCommunityIcons name="plus" size={28} color={theme.icon} />
+                <MaterialCommunityIcons
+                    name="plus"
+                    size={28}
+                    color={theme.icon}
+                />
             </TouchableOpacity>
         </View>
     );

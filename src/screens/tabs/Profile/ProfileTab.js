@@ -19,17 +19,17 @@ import {
     setResponReset,
     setTypeMenu,
 } from "../../../store/Account";
-import { setProfile as setProfileKores } from "../../../store/profile"; // Adjust the import path as necessary
+import { setProfile as setProfileKores } from "../../../store/profile";
 import { useNavigation } from "@react-navigation/native";
-import { config } from "../../../services/api"; // Adjust the import path as necessary
-import { Config } from "../../../services/config"; // Adjust the import path as necessary
+// import { config } from "../../../services/api";
+import { Config } from "../../../services/config";
 import { useTheme } from "../../../theme/ThemeContext";
 
 const ProfileTab = () => {
-    const { isDark, toggleTheme, theme } = useTheme(); // Assuming you have a useTheme hook for theming
+    const { isDark, toggleTheme, theme } = useTheme();
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const [token, setToken] = useState(""); // Initialize token state
+    const [token, setToken] = useState("");
     const BASE_URL = Config.base_url + "bridge";
     const { profile, linimasa, loading, responReset } = useSelector(
         (state) => state.account
@@ -67,7 +67,7 @@ const ProfileTab = () => {
             <CustomButton
                 title="Logout"
                 icon="logout"
-                color={theme.error} // Tomato color for logout button
+                color={theme.error}
                 onPress={() => {
                     dispatch(setLogout());
                     removeTokenValue();

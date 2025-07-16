@@ -1,0 +1,241 @@
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { getTokenValue } from "../services/session";
+import { View } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import {
+  setAddressbookFavorit,
+  setAddressbookSelected,
+} from "../store/AddressbookKKP";
+import { Ionicons } from "@expo/vector-icons";
+import { nde_api } from "../utils/api.config";
+import { getHTTP } from "../utils/http";
+import { ThemeContext } from "../theme/ThemeContext";
+
+const CardPegawai = ({ data, addressbook, config, device }) => {
+  const { theme } = ThemeContext;
+  const dispatch = useDispatch();
+  const checkedNodeRadio = () => {
+    const checkNode = addressbook.selected.filter(
+      (item) =>
+        (item.code === data.code && item.nik === data.nik) ||
+        item.nik === data.code
+    );
+    if (checkNode.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const deleteItem = (id, state) => {
+    let data;
+    if (state === "jabatan") {
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter((data) => {
+          let code = data.code;
+          return code !== id;
+        });
+      } else {
+        data = addressbook.selected.filter((data) => {
+          let nip = data.nip || data?.officer?.official.split("/")[1];
+          return nip !== id;
+        });
+      }
+      dispatch(setAddressbookSelected(data));
+    } else {
+      if (config.tipeAddress == "korespondensi") {
+        data = addressbook.selected.filter((data) => data.nik !== id);
+      } else {
+        data = addressbook.selected.filter((data) => data.nip !== id);
+      }
+      dispatch(setAddressbookSelected(data));
+    }
+  };
+
+  return (
+    <View style={{ marginBottom: 10 }}>
+      <TouchableOpacity
+        style={{
+          marginHorizontal: 15,
+          paddingVertical: 10,
+          paddingHorizontal: 10,
+          borderRadius: 8,
+          backgroundColor: theme.surface,
+          //shadow ios
+          shadowOffset: { width: -2, height: 4 },
+          shadowColor: "#171717",
+          shadowOpacity: 0.2,
+          //shadow android
+          elevation: 2,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+        onPress={() => {
+          const checkNode = addressbook.selected.filter(
+            (item) =>
+              (item.code === data.code && item.nik === data.nik) ||
+              item.nik === data.code
+          );
+          if (checkNode.length > 0) {
+            if (config.tipeAddress == "korespondensi") {
+              checkNode.map((item) => {
+                deleteItem(item.code, "jabatan");
+              });
+            } else {
+              checkNode.map((item) => {
+                deleteItem(
+                  item.nip || item.officer.official.split("/")[1],
+                  "jabatan"
+                );
+              });
+            }
+          } else {
+            if (config.multiselect) {
+              dispatch(setAddressbookSelected([...addressbook.selected, data]));
+            } else {
+              dispatch(setAddressbookSelected([data]));
+            }
+          }
+        }}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          {checkedNodeRadio() ? (
+            <Ionicons name="ellipse" size={24} color={theme.primary} />
+          ) : (
+            <Ionicons name="ellipse-outline" size={24} />
+          )}
+          <View style={{ flexDirection: "column", width: "90%" }}>
+            <Text style={{ fontSize: fontSizeResponsive("H4", device) }}>
+              {data.person ? data.person : data.name}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export const AddressbookFavorit = ({ route }) => {
+  const [token, setToken] = useState("");
+  const { config } = route.params;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+
+  const [inputValue, setInputValue] = useState("");
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    if (token !== "") {
+      if (config.tipeAddress === "korespondensi" && search.length == 0) {
+        (async () => {
+          let response = await getHTTP(nde_api.personallist);
+          dispatch(setAddressbookFavorit(response.data));
+        })();
+      }
+    }
+  }, [token, search]);
+
+  const { addressbook } = useSelector((state) => state.addressBookKKP);
+
+  const [filterData, setFilterData] = useState([]);
+
+  useEffect(() => {
+    if (config.tipeAddress != "korespondensi") {
+      setFilterData(addressbook.employee);
+    }
+  }, [addressbook]);
+
+  filter = () => {
+    setSearch(inputValue);
+  };
+
+  useEffect(() => {
+    if (search.length != 0) {
+      let data;
+      if (config.tipeAddress === "korespondensi") {
+        (async () => {
+          let response = await getHTTP(
+            nde_api.personallist + "?query=" + search
+          );
+          data = response.data;
+          setFilterData(data);
+        })();
+      }
+    } else {
+      if (config.tipeAddress === "korespondensi") {
+        (async () => {
+          let response = await getHTTP(nde_api.personallist);
+          data = response.data;
+          setFilterData(data);
+        })();
+      }
+    }
+  }, [search]);
+
+  const { device } = useSelector((state) => state.apps);
+
+  return (
+    <View style={{ height: "95%", paddingVertical: 10 }}>
+      <View
+        style={{
+          marginHorizontal: 15,
+          marginBottom: 20,
+          backgroundColor: theme.surface,
+          borderRadius: 8,
+        }}
+      >
+        <View style={[styles.input, {borderColor: theme.border}]}>
+          <Ionicons
+            name="search"
+            size={fontSizeResponsive("H3", device)}
+            color={theme.primary}
+          />
+          <TextInput
+            placeholder={"Cari..."}
+            style={{ fontSize: fontSizeResponsive("H4", device), flex: 1 }}
+            maxLength={30}
+            value={inputValue}
+            onChangeText={(text) => setInputValue(text)}
+            onEndEditing={filter}
+            clearButtonMode="always"
+            allowFontScaling={false}
+          />
+        </View>
+      </View>
+      <FlatList
+        data={filterData}
+        renderItem={({ item }) => (
+          <CardPegawai
+            data={item}
+            addressbook={addressbook}
+            config={config}
+            device={device}
+          />
+        )}
+        style={{ marginBottom: 40 }}
+        keyExtractor={(item) => item.code}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderRadius: 8,
+  },
+});

@@ -7,7 +7,7 @@ import {
     StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../theme/ThemeContext"; // Adjust the import path as necessary
+import { useTheme } from "../theme/ThemeContext";
 
 const CounterFilter = ({ filters = [], selected, onSelect }) => {
     const { theme, isDark, toggleTheme, themeMode  } = useTheme();
@@ -19,8 +19,8 @@ const CounterFilter = ({ filters = [], selected, onSelect }) => {
                 style={[
                     styles.counterBox,
                     {
-                        backgroundColor: theme.card, // 🔹 latar kartu
-                        borderColor: isSelected ? item.color : theme.border, // 🔸 border dinamis
+                        backgroundColor: theme.card,
+                        borderColor: isSelected ? item.color : theme.border,
                     },
                 ]}
                 onPress={() => onSelect(item.key)}
@@ -29,7 +29,7 @@ const CounterFilter = ({ filters = [], selected, onSelect }) => {
                     <View
                         style={{
                             ...styles.iconWrapper,
-                            backgroundColor: item.color, // Tetap pakai item.color
+                            backgroundColor: item.color,
                         }}
                     >
                         <Ionicons
@@ -41,7 +41,7 @@ const CounterFilter = ({ filters = [], selected, onSelect }) => {
                     <Text
                         style={[
                             styles.count,
-                            { color: isSelected ? item.color : theme.text }, // 🔸 angka kontras
+                            { color: isSelected ? item.color : theme.text },
                         ]}
                     >
                         {item.value}
@@ -54,7 +54,7 @@ const CounterFilter = ({ filters = [], selected, onSelect }) => {
                         {
                             color: isSelected
                                 ? item.color
-                                : theme.textSecondary, // 🔸 teks label
+                                : theme.textSecondary,
                         },
                     ]}
                 >
@@ -71,7 +71,7 @@ const CounterFilter = ({ filters = [], selected, onSelect }) => {
             keyExtractor={(item) => item.key}
             numColumns={2}
             columnWrapperStyle={styles.row}
-            scrollEnabled={false} // non-scrollable
+            scrollEnabled={false}
         />
     );
 };

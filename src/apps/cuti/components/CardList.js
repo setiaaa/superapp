@@ -12,7 +12,6 @@ const CardList = ({ item, token }) => {
     const dispatch = useDispatch();
     const getDetail = (id) => {
         const params = { token, id };
-        // const data = event.listsprogress.find(item => item.id === id)
         dispatch(getDetailArsipCuti(params));
     };
 

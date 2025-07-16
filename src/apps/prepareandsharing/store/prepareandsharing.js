@@ -80,12 +80,10 @@ const PrepareAndSharingSlice = createSlice({
         builder
             .addCase(getDocument.fulfilled, (state, action) => {
                 state.dokumen.lists = action.payload;
-                console.log("berhasil");
                 state.loading = false;
                 state.load = false;
             })
             .addCase(getDocument.pending, (state, action) => {
-                console.log("nunggu");
                 state.loading = true;
                 state.load = true;
             })
@@ -152,7 +150,6 @@ const PrepareAndSharingSlice = createSlice({
                 let data = [...state.attachment, action.payload];
                 state.attachment = data;
                 state.loading = false;
-                console.log("berhasil");
             })
             .addCase(postAttachmentRepo.pending, (state, action) => {
                 state.loading = true;

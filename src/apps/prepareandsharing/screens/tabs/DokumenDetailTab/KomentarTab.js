@@ -29,8 +29,6 @@ const KomentarTab = () => {
     const detail = dokumen.detail;
     const comment = detail?.comments;
 
-    // console.log(detail)
-
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -62,8 +60,6 @@ const KomentarTab = () => {
             dispatch(setRefresh(false));
         }
     }, [refresh]);
-
-    // console.log('Komen: ', comment)
 
     return (
         <KeyboardAvoidingView

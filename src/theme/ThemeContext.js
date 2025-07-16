@@ -6,7 +6,7 @@ import { lightTheme, darkTheme } from "./themes";
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-    const [themeMode, setThemeMode] = useState(null); // "light", "dark", or null (auto)
+    const [themeMode, setThemeMode] = useState(null);
     const [systemColorScheme, setSystemColorScheme] = useState(Appearance.getColorScheme());
 
     useEffect(() => {
@@ -15,13 +15,12 @@ export const ThemeProvider = ({ children }) => {
             if (savedMode === "light" || savedMode === "dark") {
                 setThemeMode(savedMode);
             } else {
-                setThemeMode(null); // auto
+                setThemeMode(null);
             }
         };
         loadTheme();
     }, []);
 
-    // Listen to system theme change if in auto mode
     useEffect(() => {
         if (themeMode === null) {
             const listener = Appearance.addChangeListener(({ colorScheme }) => {

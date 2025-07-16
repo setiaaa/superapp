@@ -17,7 +17,7 @@ const ThemeScreen = () => {
             />
             <View style={{ flex: 1, padding: 20, gap: 20 }}>
                 <CustomButton
-                    title="Teran"
+                    title="Terang"
                     onPress={() => changeTheme("light")}
                 />
                 <CustomButton

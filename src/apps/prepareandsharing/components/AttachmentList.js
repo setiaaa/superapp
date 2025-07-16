@@ -39,7 +39,7 @@ const AttachmentList = ({ attachments = [] }) => {
         try {
             if (!url) throw new Error("URL tidak tersedia");
 
-            setLoading(true); // ⬅️ Mulai loading
+            setLoading(true);
 
             const fileName = url.split("/").pop();
             const downloadResumable = FileSystem.createDownloadResumable(
@@ -61,15 +61,15 @@ const AttachmentList = ({ attachments = [] }) => {
                 [{ text: "OK" }]
             );
         } finally {
-            setLoading(false); // ⬅️ Hentikan loading
+            setLoading(false);
         }
     };
 
     return (
         <View style={styles.container}>
             <ScrollView
-                style={{ maxHeight: 250 }}
-                contentContainerStyle={{ gap: 8 }}
+                style={{ maxHeight: "100%" }}
+                contentContainerStyle={{ gap: 12 }}
                 showsVerticalScrollIndicator={true}
             >
                 {attachments.map((item, index) => {
@@ -85,7 +85,7 @@ const AttachmentList = ({ attachments = [] }) => {
                             key={index}
                             style={[
                                 styles.card,
-                                { backgroundColor: theme.card }, // ✅
+                                { backgroundColor: theme.card },
                             ]}
                         >
                             <Image

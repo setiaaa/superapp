@@ -48,7 +48,7 @@ const subApps = [
   { key: "Event", label: "Event Management", icon: "calendar-multiple" },
   { key: "SPPD", label: "SPPD", icon: "car-arrow-right" },
 ];
-const itemSize = 100; // ✅ Tetap, tidak tergantung lebar layar
+const itemSize = 100;
 const spacing = 16;
 
 const BerandaTab = () => {
@@ -95,7 +95,6 @@ const BerandaTab = () => {
             </Text>
     </TouchableOpacity>
   );
-    // saya ingin cek state tema saat ini
 
   return (
     <View style={[styles.surface, { backgroundColor: theme.background }]}>
@@ -137,7 +136,6 @@ const BerandaTab = () => {
                     styles.container,
                     { backgroundColor: theme.surface },
                 ]}
-        // columnWrapperStyle={styles.row}
       />
     </View>
   );
@@ -152,7 +150,7 @@ const styles = StyleSheet.create({
         gap: 20,
     },
     carouselWrapper: {
-    height: 250, // Tinggi untuk carousel, sesuaikan sesuai kebutuhan
+    height: 250,
     width: "100%",
   },
     greetingContainer: {
@@ -163,7 +161,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         alignSelf: "flex-end",
         maxHeight: 56,
-        // height: 56,
     },
     username: {
         fontSize: 12,
@@ -191,7 +188,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderWidth: 1,
-        // marginBottom: spacing,
         marginVertical: spacing / 2,
     },
     label: {

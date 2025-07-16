@@ -26,7 +26,6 @@ export const getThemeState = async () => {
 
 export const setThemeState = async (value) => {
   try {
-    console.log(value)
     await AsyncStorage.setItem("theme", value);
   } catch (e) {}
 }
