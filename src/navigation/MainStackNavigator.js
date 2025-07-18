@@ -12,24 +12,27 @@ import { AddressBook } from "../addressbook/AddressBookScreen";
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = () => {
-    const { device } = useSelector((state) => state.apps);
-    useEffect(() => {
-        getTokenValue().then((val) => {
-            setToken(val);
-        });
-    }, []);
-    return (
-        <Stack.Navigator screenOptions={{ headerShown: false, orientation: "auto" }}>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Calender" component={CalenderNavigator} />
-            <Stack.Screen name="Cuti" component={CutiNavigator} />
-            <Stack.Screen name="PrepareAndSharing" component={PrepareAndSharingNavigator} />
-            <Stack.Screen name="Tema" component={ThemeScreen} />
-            <Stack.Screen name="AddressBook" component={AddressBook} />
-            {/* <Stack.Screen name="SuratApp" component={SuratNavigator} />
-            <Stack.Screen name="AbsensiApp" component={AbsensiNavigator} /> */}
-        </Stack.Navigator>
-    );
+  const { device } = useSelector((state) => state.apps);
+  useEffect(() => {
+    getTokenValue().then((val) => {
+      setToken(val);
+    });
+  }, []);
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, orientation: "auto" }}
+    >
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Calender" component={CalenderNavigator} />
+      <Stack.Screen name="Cuti" component={CutiNavigator} />
+      <Stack.Screen
+        name="PrepareAndSharing"
+        component={PrepareAndSharingNavigator}
+      />
+      <Stack.Screen name="Tema" component={ThemeScreen} />
+      <Stack.Screen name="AddressBook" component={AddressBook} />
+    </Stack.Navigator>
+  );
 };
 
 export default MainStackNavigator;

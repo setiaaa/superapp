@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from "react";
+import React, { Component, useState, useEffect, use } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Search } from "../../../../../components/Search";
 import CounterFilter from "../../../../../components/CounterFilter";
@@ -8,13 +8,12 @@ import {
   getDokumenPersetujuan,
   postApproval,
 } from "../../../service/cuti";
+import CardList from "../../../components/CardList";
+import { useTheme } from "../../../../../theme/ThemeContext";
 import { getTokenValue } from "../../../../../services/session";
 import { FlatList } from "react-native-gesture-handler";
-import CardList from "../../../components/CardList";
-// import { setStatus } from "../../store";
-import { useTheme } from "../../../../../theme/ThemeContext"; // Adjust the import path as necessary
 
-const DokumenPersetujuanTab = () => {
+const DokumenPersonal = () => {
   const { theme, isDark, toggleTheme, themeMode } = useTheme();
   const [token, setToken] = useState("");
   const [page, setPage] = useState(10);
@@ -29,7 +28,6 @@ const DokumenPersetujuanTab = () => {
   }, []);
 
   const [selected, setSelected] = useState("On Progress");
-
   useEffect(() => {
     if (token !== "") {
       dispatch(
@@ -41,7 +39,6 @@ const DokumenPersetujuanTab = () => {
       );
     }
   }, [token, selected, page]);
-
   const { persetujuan, loading, status, message } = useSelector(
     (state) => state.cuti
   );
@@ -99,7 +96,10 @@ const DokumenPersetujuanTab = () => {
     }
   }, [persetujuan, search]);
 
-  const renderItem = ({ item }) => <CardList item={item} token={token} />;
+  // const renderItem = ({ item }) => <CardList item={item} token={token} />;
+  const renderItem = ({ item }) => (
+    <CardList item={item} token={token} selectedFilter={selected} />
+  );
 
   const filters = [
     {
@@ -129,12 +129,7 @@ const DokumenPersetujuanTab = () => {
   ];
 
   return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: theme.background }, // ✅ tema background
-      ]}
-    >
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <Search placeholder="Cari" iconColor="#ccc" onSearch={filter} />
       <View
         style={[
@@ -157,6 +152,7 @@ const DokumenPersetujuanTab = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -171,4 +167,5 @@ const styles = StyleSheet.create({
     height: "57%",
   },
 });
-export default DokumenPersetujuanTab;
+
+export default DokumenPersonal;
