@@ -10,7 +10,7 @@ import {
     useNavigation,
 } from "@react-navigation/native";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
-import CardList from "../../../components/CardList";
+import CardList from "../../../components/DocumentCardList";
 import Loading from "../../../../../components/Loading";
 
 const DibagikansTab = () => {

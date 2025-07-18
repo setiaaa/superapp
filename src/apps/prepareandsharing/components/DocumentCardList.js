@@ -15,7 +15,7 @@ import DokumenDetail from "../screens/tabs/DokumenDetail";
 import { useTheme } from "../../../theme/ThemeContext";
 import { Ionicons } from "@expo/vector-icons";
 
-const CardList = ({ item, token, tipe, tab }) => {
+const DocumentCardList = ({ item, token, tipe, tab }) => {
     const { theme, isDark, toggleTheme, themeMode } = useTheme();
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -146,4 +146,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CardList;
+export default DocumentCardList;

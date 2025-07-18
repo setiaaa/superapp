@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDocument } from "../../../service/prepareandsharing";
 import { getTokenValue } from "../../../../../services/session";
 import BadgeFilter from "../../../../../components/BadgeFilter";
-import CardList from "../../../components/CardList";
+import CardList from "../../../components/DocumentCardList";
 import { FlatList } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
